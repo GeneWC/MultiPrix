@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     float accel = .01f;
     float velocity = 20;
     int delayStart = 0;
+    bool endGame = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,12 +24,23 @@ public class Player : MonoBehaviour
             transform.position += new Vector3((velocity - accel) * Time.deltaTime, 0, 0);
             if (velocity - accel > 3)
             {
-                accel += 0.025f;
+                accel += 0.01f;
             }
         }
         else
         {
             delayStart++;
+        }
+
+        if (transform.position.x > 10000)
+        {
+            accel = 1f;
+            endGame = true;
+            if (velocity < 0)
+            {
+                velocity = 0;
+                accel = 0f;
+            }
         }
         
     }
@@ -38,5 +50,9 @@ public class Player : MonoBehaviour
         velocity += v;
     }
 
+    public bool getEndGame()
+    {
+        return endGame;
+    }
 
 }
