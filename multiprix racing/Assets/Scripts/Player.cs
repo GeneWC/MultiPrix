@@ -21,10 +21,24 @@ public class Player : MonoBehaviour
        
         if (delayStart > 180)
         {
-            transform.position += new Vector3((velocity - accel) * Time.deltaTime, 0, 0);
-            if (velocity - accel > 3)
+            transform.position += new Vector3((velocity) * Time.deltaTime, 0, 0);
+            if (velocity > 3 && !endGame)
             {
-                accel += 0.01f;
+                velocity -= accel;
+            }
+            if (endGame)
+            {
+                
+                if (velocity > 0)
+                {
+                    velocity -= accel;
+                }
+                else
+                {
+                    velocity = 0;
+                    accel = 0;
+                }
+                
             }
         }
         else
@@ -32,15 +46,10 @@ public class Player : MonoBehaviour
             delayStart++;
         }
 
-        if (transform.position.x > 10000)
+        if (transform.position.x > 900)
         {
-            accel = 1f;
+            accel = .1f;
             endGame = true;
-            if (velocity < 0)
-            {
-                velocity = 0;
-                accel = 0f;
-            }
         }
         
     }
