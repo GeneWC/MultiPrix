@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class Player : MonoBehaviour
     float velocity = 20;
     int delayStart = 0;
     bool endGame = false;
+    public TMP_Text text;
+    private Vector3 startingPosition;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +21,8 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+        startingPosition = transform.position;
+        text.text = "" + (int)velocity + " mph";
         if (delayStart > 180)
         {
             transform.position += new Vector3((velocity) * Time.deltaTime, 0, 0);
