@@ -53,11 +53,12 @@ public class UI_InputWindow : MonoBehaviour
         {
             Debug.Log("Correct!");
             GenerateNewQuestion();
+            player.GetComponent<Player>().setQuestionsAnswered(true);
+
         }
         else
         {
-            Debug.Log("Incorrect");
-            inputField.text = "";
+            StartCoroutine(incorrectQuestion());
         }
         inputField.text = "";
         inputField.Select();
@@ -72,6 +73,21 @@ public class UI_InputWindow : MonoBehaviour
         answer = num1 * num2;
         question.SetText(num1 + " x " + num2);
         player.GetComponent<Player>().setVelocity(5);
+    }
+
+    IEnumerator incorrectQuestion()
+    {
+        Debug.Log("Incorrect");
+        inputField.DeactivateInputField();
+        inputField.image.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        inputField.image.color = Color.white;
+        yield return new WaitForSeconds(0.1f);
+        inputField.image.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        inputField.image.color = Color.white;
+        player.GetComponent<Player>().setQuestionsAnswered(false);
+        inputField.ActivateInputField();
     }
 }
 
