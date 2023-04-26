@@ -29,13 +29,13 @@ public class UI_InputWindow : MonoBehaviour
     {
         if (!inputField.text.Equals(""))
         {
-            if (inputField.text[inputField.text.Length - 1] < 48 || inputField.text[inputField.text.Length - 1] > 57 || inputField.text.Length > 3)
+            if (inputField.text[inputField.text.Length - 1] < 48 || inputField.text[inputField.text.Length - 1] > 57 || inputField.text.Length > 3) // makes sure the input in the text field is valid
             {
-                inputField.text = inputField.text.Substring(0, inputField.text.Length - 1);
+                inputField.text = inputField.text.Substring(0, inputField.text.Length - 1); // delete text if input isn't valid
             }
         }
 
-        if (player.GetComponent<Player>().getEndGame())
+        if (player.GetComponent<Player>().getEndGame()) // game has ended, disable textField
         {
             inputField.DeactivateInputField();
         }
@@ -75,10 +75,12 @@ public class UI_InputWindow : MonoBehaviour
         player.GetComponent<Player>().setVelocity(5);
     }
 
-    IEnumerator incorrectQuestion()
+    IEnumerator incorrectQuestion() // simultaneous routine that runs when a questions is wrong
     {
         Debug.Log("Incorrect");
         inputField.DeactivateInputField();
+
+        // flash the input screen
         inputField.image.color = Color.red;
         yield return new WaitForSeconds(0.1f);
         inputField.image.color = Color.white;
@@ -86,6 +88,8 @@ public class UI_InputWindow : MonoBehaviour
         inputField.image.color = Color.red;
         yield return new WaitForSeconds(0.1f);
         inputField.image.color = Color.white;
+
+        // add 1 to incorrect answers
         player.GetComponent<Player>().setQuestionsAnswered(false);
         inputField.ActivateInputField();
     }
