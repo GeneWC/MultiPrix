@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     float velocity = 20;
     int delayStart = 0;
     bool endGame = false;
+    int questionsAnsweredRight = 0;
+    int questionsAnsweredWrong = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,10 +23,27 @@ public class Player : MonoBehaviour
        
         if (delayStart > 180)
         {
-            transform.position += new Vector3((velocity - accel) * Time.deltaTime, 0, 0);
-            if (velocity - accel > 3)
+            transform.position += new Vector3((velocity) * Time.deltaTime, 0, 0);
+            if (velocity > 3 && !endGame)
             {
-                accel += 0.01f;
+                velocity -= accel;
+            }
+            if (endGame)
+            {
+                
+                if (velocity > 0)
+                {
+                    velocity -= accel;
+                }
+                else
+                {
+                    velocity = 0;
+                    accel = 0;
+                }
+                // fix this infinitely looping
+                Debug.Log("Questions Answered: " + questionsAnsweredRight + "/" + (questionsAnsweredRight + questionsAnsweredWrong));
+                Debug.Log("Percent Accuracy: " + ( 100 * (double)questionsAnsweredRight) / (questionsAnsweredRight + questionsAnsweredWrong));
+                
             }
         }
         else
@@ -32,27 +51,39 @@ public class Player : MonoBehaviour
             delayStart++;
         }
 
-        if (transform.position.x > 10000)
+        if (transform.position.x > 900)
         {
-            accel = 1f;
+            accel = .1f;
             endGame = true;
-            if (velocity < 0)
-            {
-                velocity = 0;
-                accel = 0f;
-            }
         }
         
     }
 
     public void setVelocity(int v)
     {
-        velocity += v;
+        if (velocity < 30)
+        {
+            velocity += v;
+        }
     }
 
     public bool getEndGame()
     {
         return endGame;
+    }
+
+    // adds a number to the total tally of correct answers
+    public void setQuestionsAnswered(bool right)
+    {
+        if (right)
+        {
+            questionsAnsweredRight++;
+        }
+        else
+        {
+            questionsAnsweredWrong++;
+        }
+       
     }
 
 }
