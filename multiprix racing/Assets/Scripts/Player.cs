@@ -11,12 +11,9 @@ public class Player : MonoBehaviour
     float velocity = 20;
     int delayStart = 0;
     bool endGame = false;
-<<<<<<< Updated upstream
-=======
     bool raceEnd = false;
     bool endGameAlreadyRan = false;
     // points and stuff
->>>>>>> Stashed changes
     int questionsAnsweredRight = 0;
     int questionsAnsweredWrong = 0;
     public TMP_Text text;
@@ -61,11 +58,7 @@ public class Player : MonoBehaviour
             delayStart++;
         }
 
-<<<<<<< Updated upstream
-        if (transform.position.x > 900)
-=======
         if (transform.position.x > 920 && !endGameAlreadyRan)
->>>>>>> Stashed changes
         {
             accel = .1f;
             endGame = true;
