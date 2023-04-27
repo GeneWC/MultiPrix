@@ -41,3 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: CanvasUI
+    uniqueID: 715532309
+    locked: 0
+  - name: Background Image
+    uniqueID: 3585742035
+    locked: 0
