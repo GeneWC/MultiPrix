@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
 
-    float accel = .01f;
+    float accel = .001f;
     float velocity = 20;
     int delayStart = 0;
+    int delayChange = 0;
+    bool doneplaying = false;
     bool endGame = false;
     bool raceEnd = false;
     bool endGameAlreadyRan = false;
@@ -50,9 +53,14 @@ public class Player : MonoBehaviour
                 // fix this infinitely looping
                 Debug.Log("Questions Answered: " + questionsAnsweredRight + "/" + (questionsAnsweredRight + questionsAnsweredWrong));
                 Debug.Log("Percent Accuracy: " + ( 100 * (double)questionsAnsweredRight) / (questionsAnsweredRight + questionsAnsweredWrong));
+                doneplaying = true;
                 
+                    
+                
+                   
+                }
             }
-        }
+        
         else
         {
             delayStart++;
@@ -64,7 +72,17 @@ public class Player : MonoBehaviour
             endGame = true;
             endGameAlreadyRan = true;
         }
-        
+        if (doneplaying)
+        {
+            if (delayChange > 1440)
+            {
+                SceneManager.LoadScene("Upgrades");
+            }
+            else
+            {
+                delayChange++;
+            }
+        }
     }
    
     public void setVelocity(int v)
@@ -93,6 +111,7 @@ public class Player : MonoBehaviour
         }
        
     }
+    
     
 
 }
