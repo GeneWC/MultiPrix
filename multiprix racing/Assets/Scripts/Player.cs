@@ -12,7 +12,6 @@ public class Player : MonoBehaviour
     float velocity = 20;
     int delayStart = 0;
     int delayChange = 0;
-    bool doneplaying = false;
     bool endGame = false;
     bool raceEnd = false;
     bool endGameAlreadyRan = false;
@@ -53,7 +52,7 @@ public class Player : MonoBehaviour
                 // fix this infinitely looping
                 Debug.Log("Questions Answered: " + questionsAnsweredRight + "/" + (questionsAnsweredRight + questionsAnsweredWrong));
                 Debug.Log("Percent Accuracy: " + ( 100 * (double)questionsAnsweredRight) / (questionsAnsweredRight + questionsAnsweredWrong));
-                doneplaying = true;
+                raceEnd = true;
                 
                     
                 
@@ -72,7 +71,7 @@ public class Player : MonoBehaviour
             endGame = true;
             endGameAlreadyRan = true;
         }
-        if (doneplaying)
+        if (raceEnd)
         {
             if (delayChange > 1440)
             {
