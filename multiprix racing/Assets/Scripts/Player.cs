@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,8 +9,8 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
 
-    float accel = .001f;
-    float velocity = 20;
+    float accel = .01f;
+    float velocity = 40;
     int delayStart = 0;
     int delayChange = 0;
     bool doneplaying = false;
@@ -19,6 +20,7 @@ public class Player : MonoBehaviour
     // points and stuff
     int questionsAnsweredRight = 0;
     int questionsAnsweredWrong = 0;
+    int points = 0;
     public TMP_Text text;
   
     // Start is called before the first frame update
@@ -34,7 +36,7 @@ public class Player : MonoBehaviour
         if (delayStart > 180)
         {
             transform.position += new Vector3((velocity) * Time.deltaTime, 0, 0);
-            if (velocity > 3 && !endGame)
+            if (velocity > 15 && !endGame)
             {
                 velocity -= accel;
             }
@@ -50,11 +52,16 @@ public class Player : MonoBehaviour
                     velocity = 0;
                     accel = 0;
                 }
-                // fix this infinitely looping
+                
+                if (raceEnd)
+                {
+                    endGame = false;
+                    raceEnd = false;
+                }
                 Debug.Log("Questions Answered: " + questionsAnsweredRight + "/" + (questionsAnsweredRight + questionsAnsweredWrong));
                 Debug.Log("Percent Accuracy: " + ( 100 * (double)questionsAnsweredRight) / (questionsAnsweredRight + questionsAnsweredWrong));
                 doneplaying = true;
-                
+                calculatePoints();
                     
                 
                    
@@ -71,6 +78,8 @@ public class Player : MonoBehaviour
             accel = .1f;
             endGame = true;
             endGameAlreadyRan = true;
+            raceEnd = true;
+            
         }
         if (doneplaying)
         {
@@ -111,7 +120,51 @@ public class Player : MonoBehaviour
         }
        
     }
-    
-    
+
+    public void calculatePoints()
+    {
+        double percentAccuracy = Math.Round(100 * (double)(questionsAnsweredRight) / (questionsAnsweredRight + questionsAnsweredWrong), 2);
+        Debug.Log("Questions Answered: " + questionsAnsweredRight + "/" + (questionsAnsweredRight + questionsAnsweredWrong));
+        Debug.Log("Percent Accuracy: " + percentAccuracy);
+
+        // award points for correct answers, take away points for incorrect answers
+        points += (questionsAnsweredRight * 50);
+        if (points - (questionsAnsweredWrong * 20) >= 0) // check if points will go into the negatives
+        {
+            points -= questionsAnsweredWrong * 20;
+        }
+        else // only executes if points will go into the negatives, set it equal to 0
+        {
+            points = 0;
+        }
+
+        // bonus points for accuracy
+        if (questionsAnsweredRight + questionsAnsweredWrong < 10)
+        {
+            // give no bonus if too little questions answered
+            Debug.Log("Not enough questions answered for accuracy bonus");
+        }
+        else if (percentAccuracy == 100.0d)
+        {
+            points += 200;
+        }
+        else if (percentAccuracy >= 95.0d)
+        {
+            points += 150;
+        }
+        else if (percentAccuracy >= 90.0d)
+        {
+            points += 100;
+        }
+        else if (percentAccuracy >= 70.0d)
+        {
+            points += 40;
+        }
+
+        // output num of points
+        Debug.Log("Points earned: " + points);
+    }
+
+
 
 }
