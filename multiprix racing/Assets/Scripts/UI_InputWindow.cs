@@ -54,6 +54,7 @@ public class UI_InputWindow : MonoBehaviour
             Debug.Log("Correct!");
             GenerateNewQuestion();
             player.GetComponent<Player>().setQuestionsAnswered(true);
+             StartCoroutine(correctQuestion());
 
         }
         else
@@ -84,6 +85,20 @@ public class UI_InputWindow : MonoBehaviour
         inputField.image.color = Color.white;
         yield return new WaitForSeconds(0.1f);
         inputField.image.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        inputField.image.color = Color.white;
+        player.GetComponent<Player>().setQuestionsAnswered(false);
+        inputField.ActivateInputField();
+    }
+    IEnumerator correctQuestion()
+    {
+        Debug.Log("Correct");
+        inputField.DeactivateInputField();
+        inputField.image.color = Color.green;
+        yield return new WaitForSeconds(0.1f);
+        inputField.image.color = Color.white;
+        yield return new WaitForSeconds(0.1f);
+        inputField.image.color = Color.green;
         yield return new WaitForSeconds(0.1f);
         inputField.image.color = Color.white;
         player.GetComponent<Player>().setQuestionsAnswered(false);

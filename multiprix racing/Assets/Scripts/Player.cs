@@ -36,7 +36,7 @@ public class Player : MonoBehaviour
         if (delayStart > 180)
         {
             transform.position += new Vector3((velocity) * Time.deltaTime, 0, 0);
-            if (velocity > 15 && !endGame)
+            if (velocity > 0 && !endGame)
             {
                 velocity -= accel;
             }
