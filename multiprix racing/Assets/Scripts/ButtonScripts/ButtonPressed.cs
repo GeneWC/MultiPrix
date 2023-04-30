@@ -8,6 +8,7 @@ public class ButtonPressed : MonoBehaviour
 {
     
     public Button yourButton;
+    public AudioSource AudioSource;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +18,9 @@ public class ButtonPressed : MonoBehaviour
     }
     void TaskOnClick(){
 		SceneManager.LoadScene("africa_race");
+        AudioSource.Play(0);
         Destroy(GameObject.Find("Main Title Track"));
+        
 	}
 
     // Update is called once per frame
