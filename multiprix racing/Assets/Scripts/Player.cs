@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
 
     float accel = .01f;
     float velocity = 40;
-    int delayStart = 0;
+    float delayStart = 0;
     int delayChange = 0;
     bool doneplaying = false;
     bool endGame = false;
@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         text.text = "" + (int)velocity + " mph";
-        if (delayStart > 180)
+        if (delayStart > 3)
         {
             transform.position += new Vector3((velocity) * Time.deltaTime, 0, 0);
             if (velocity > 0 && !endGame)
@@ -70,7 +70,8 @@ public class Player : MonoBehaviour
         
         else
         {
-            delayStart++;
+            delayStart += Time.deltaTime;
+            Debug.Log(delayStart);
         }
 
         if (transform.position.x > 920 && !endGameAlreadyRan)
