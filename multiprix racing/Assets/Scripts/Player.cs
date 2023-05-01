@@ -5,8 +5,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Unity.Netcode;
 
-public class Player : MonoBehaviour
+public class Player : NetworkBehaviour
 {
 
     float accel = .01f;
@@ -32,6 +33,8 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(!IsOwner) return;
+
         text.text = "" + (int)velocity + " mph";
         if (delayStart > 180)
         {
@@ -61,10 +64,7 @@ public class Player : MonoBehaviour
                 Debug.Log("Questions Answered: " + questionsAnsweredRight + "/" + (questionsAnsweredRight + questionsAnsweredWrong));
                 Debug.Log("Percent Accuracy: " + ( 100 * (double)questionsAnsweredRight) / (questionsAnsweredRight + questionsAnsweredWrong));
                 doneplaying = true;
-                calculatePoints();
-                    
-                
-                   
+                calculatePoints();    
                 }
             }
         
