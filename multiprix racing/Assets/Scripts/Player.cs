@@ -32,7 +32,8 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        text.text = "" + (int)velocity + " mph";
+        GameObject mph = GameObject.Find("MPH");
+        mph.GetComponent<TMP_Text>().text = "" + (int)velocity + " mph";
         if (delayStart > 180)
         {
             transform.position += new Vector3((velocity) * Time.deltaTime, 0, 0);

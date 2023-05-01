@@ -11,19 +11,20 @@ public class UI_InputWindow : MonoBehaviour
     private TMP_InputField inputField;
     public TextMeshProUGUI question;
     private int answer = 1;
-    private GameObject player;
     // Start is called before the first frame update
     void Start()
     {
         // read in question from the text field containing the question, and split it to be the numbers, and find the answer of the question.
         question = transform.Find("Question").GetComponent<TextMeshProUGUI>();
         inputField = transform.Find("InputField (TMP)").GetComponent<TMP_InputField>();
-        player = GameObject.Find("Player");
         GenerateNewQuestion();
         inputField.Select();
         inputField.ActivateInputField();
     }
-
+    Player getPlayer(){
+        GameObject player = GameObject.Find("Player");
+        return player != null ? player.GetComponent<Player>() : null;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -34,8 +35,8 @@ public class UI_InputWindow : MonoBehaviour
                 inputField.text = inputField.text.Substring(0, inputField.text.Length - 1);
             }
         }
-
-        if (player.GetComponent<Player>().getEndGame())
+        Player player = getPlayer();
+        if (player != null && player.getEndGame())
         {
             inputField.DeactivateInputField();
         }
@@ -48,22 +49,28 @@ public class UI_InputWindow : MonoBehaviour
     {
         
         input = s;
+        try {
+            
+            if (Int32.Parse(input) == answer) {
+        
+                Debug.Log("Correct!");
+                GenerateNewQuestion();
+                Player player = getPlayer();
+                if(player != null)
+                    player.setQuestionsAnswered(true);
+                StartCoroutine(correctQuestion());
 
-        if (Int32.Parse(input) == answer)
-        {
-            Debug.Log("Correct!");
-            GenerateNewQuestion();
-            player.GetComponent<Player>().setQuestionsAnswered(true);
-             StartCoroutine(correctQuestion());
-
+            }
+            else
+            {
+                StartCoroutine(incorrectQuestion());
+            }
+            inputField.text = "";
+            inputField.Select();
+            inputField.ActivateInputField();
+            }
+        catch(Exception ex) {
         }
-        else
-        {
-            StartCoroutine(incorrectQuestion());
-        }
-        inputField.text = "";
-        inputField.Select();
-        inputField.ActivateInputField();
     }
 
     public void GenerateNewQuestion()
@@ -73,7 +80,9 @@ public class UI_InputWindow : MonoBehaviour
         int num2 = random.Next(1, 12);
         answer = num1 * num2;
         question.SetText(num1 + " x " + num2);
-        player.GetComponent<Player>().setVelocity(5);
+        Player player = getPlayer();
+        if(player != null)
+            player.setVelocity(5);
     }
 
     IEnumerator incorrectQuestion()
@@ -87,7 +96,9 @@ public class UI_InputWindow : MonoBehaviour
         inputField.image.color = Color.red;
         yield return new WaitForSeconds(0.1f);
         inputField.image.color = Color.white;
-        player.GetComponent<Player>().setQuestionsAnswered(false);
+        Player player = getPlayer();
+        if(player != null)
+            player.setQuestionsAnswered(false);
         inputField.ActivateInputField();
     }
     IEnumerator correctQuestion()
@@ -101,7 +112,9 @@ public class UI_InputWindow : MonoBehaviour
         inputField.image.color = Color.green;
         yield return new WaitForSeconds(0.1f);
         inputField.image.color = Color.white;
-        player.GetComponent<Player>().setQuestionsAnswered(false);
+        Player player = getPlayer();
+        if(player != null)
+            player.setQuestionsAnswered(false);
         inputField.ActivateInputField();
     }
 }
