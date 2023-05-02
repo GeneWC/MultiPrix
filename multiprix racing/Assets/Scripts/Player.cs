@@ -9,7 +9,8 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
 
-    float accel = .01f;
+    float accel = .005f;
+    float maxSpeed = 31;
     float velocity = 40;
     int delayStart = 0;
     int delayChange = 0;
@@ -21,7 +22,7 @@ public class Player : MonoBehaviour
     int questionsAnsweredRight = 0;
     int questionsAnsweredWrong = 0;
     int points = 0;
-    public TMP_Text text;
+    public TMP_Text text, scoreText, questionsText, placementText;
   
     // Start is called before the first frame update
     void Start()
@@ -32,7 +33,14 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        text.text = "" + (int)velocity + " mph";
+         if (velocity < maxSpeed - 1)
+        {
+            text.text = "" + (int)velocity + " mph";
+            
+        }
+        else{
+            text.text = "" + (int)velocity + " mph" + "\n" + "(MAX SPEED!)";
+        }
         if (delayStart > 180)
         {
             transform.position += new Vector3((velocity) * Time.deltaTime, 0, 0);
@@ -58,7 +66,8 @@ public class Player : MonoBehaviour
                     endGame = false;
                     raceEnd = false;
                 }
-                Debug.Log("Questions Answered: " + questionsAnsweredRight + "/" + (questionsAnsweredRight + questionsAnsweredWrong));
+                questionsText.text = "Questions Answered: " + questionsAnsweredRight + "/" + (questionsAnsweredRight + questionsAnsweredWrong);
+                placementText.text = "You placed" + "1st!";
                 Debug.Log("Percent Accuracy: " + ( 100 * (double)questionsAnsweredRight) / (questionsAnsweredRight + questionsAnsweredWrong));
                 doneplaying = true;
                 calculatePoints();
@@ -96,9 +105,13 @@ public class Player : MonoBehaviour
    
     public void setVelocity(int v)
     {
-        if (velocity < 30)
+        if (velocity < maxSpeed - v)
         {
             velocity += v;
+            
+        }
+        else{
+            velocity = maxSpeed;
         }
     }
 
@@ -162,7 +175,7 @@ public class Player : MonoBehaviour
         }
 
         // output num of points
-        Debug.Log("Points earned: " + points);
+        scoreText.text = ("Points earned: " + points);
     }
 
 
