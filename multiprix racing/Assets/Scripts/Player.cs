@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public class Player : MonoBehaviour
 {
@@ -22,18 +23,22 @@ public class Player : MonoBehaviour
     int questionsAnsweredRight = 0;
     int questionsAnsweredWrong = 0;
     int points = 0;
+    
+    
     public TMP_Text text, scoreText, questionsText, placementText;
   
     // Start is called before the first frame update
     void Start()
     {
-        
+       
     }
 
     // Update is called once per frame
     void Update()
     {
-         if (velocity < maxSpeed - 1)
+        
+        
+        if (velocity < maxSpeed - 1)
         {
             text.text = "" + (int)velocity + " mph";
             
