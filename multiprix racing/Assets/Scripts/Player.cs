@@ -10,7 +10,8 @@ using Random = UnityEngine.Random;
 public class Player : MonoBehaviour
 {
 
-    float accel = .005f;
+    float accel;
+    float deccelrate = .1f;
     float maxSpeed = 31;
     float velocity = 40;
     int delayStart = 0;
@@ -30,14 +31,14 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       
+       accel = PlayerPrefs.GetFloat("acceleration");
     }
 
     // Update is called once per frame
     void Update()
     {
         
-        
+        Debug.Log(accel);
         if (velocity < maxSpeed - 1)
         {
             text.text = "" + (int)velocity + " mph";
@@ -58,12 +59,12 @@ public class Player : MonoBehaviour
                 
                 if (velocity > 0)
                 {
-                    velocity -= accel;
+                    velocity -= deccelrate;
                 }
                 else
                 {
                     velocity = 0;
-                    accel = 0;
+                    deccelrate = 0;
                 }
                 
                 if (raceEnd)
@@ -99,7 +100,14 @@ public class Player : MonoBehaviour
         {
             if (delayChange > 1440)
             {
+                if(PlayerPrefs.GetInt("phase") == 0){
+                    
                 SceneManager.LoadScene("Upgrades");
+                }
+                if(PlayerPrefs.GetInt("phase") == 1){
+                    
+                SceneManager.LoadScene("Game End");
+                }
             }
             else
             {
@@ -181,6 +189,8 @@ public class Player : MonoBehaviour
 
         // output num of points
         scoreText.text = ("Points earned: " + points);
+        Debug.Log(points);
+        PlayerPrefs.SetInt("currency", points);
     }
 
 

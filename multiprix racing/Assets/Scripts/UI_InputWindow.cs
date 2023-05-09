@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+
 public class UI_InputWindow : MonoBehaviour
 {
     private string input;
@@ -12,6 +13,7 @@ public class UI_InputWindow : MonoBehaviour
     public TextMeshProUGUI question;
     private int answer = 1;
     private GameObject player;
+    public AudioSource CorrectAudioSource, InorrectAudioSource;
     // Start is called before the first frame update
     void Start()
     {
@@ -89,6 +91,7 @@ public class UI_InputWindow : MonoBehaviour
         inputField.image.color = Color.white;
         player.GetComponent<Player>().setQuestionsAnswered(false);
         inputField.ActivateInputField();
+        InorrectAudioSource.Play(0);
     }
     IEnumerator correctQuestion()
     {
@@ -103,6 +106,7 @@ public class UI_InputWindow : MonoBehaviour
         inputField.image.color = Color.white;
         player.GetComponent<Player>().setQuestionsAnswered(false);
         inputField.ActivateInputField();
+        CorrectAudioSource.Play(0);
     }
 }
 

@@ -10,10 +10,13 @@ public class Timer : MonoBehaviour
     public TMP_Text text;
     float time = 30f;
     float waitTime = 0;
+    int randomNumber;
+    string[] mapnames = { "africa_race", "america_race", "china_race", "Mazda" };
     // Start is called before the first frame update
     void Start()
     {
         text.text = "Time Remaining: " + time;
+        randomNumber = Random.Range(0, 2);
     }
 
     // Update is called once per frame
@@ -31,7 +34,8 @@ public class Timer : MonoBehaviour
         }
         if(time == 0)
         {
-            SceneManager.LoadScene("india_race");
+            
+            SceneManager.LoadScene(mapnames[randomNumber]);
         }
     }
 }

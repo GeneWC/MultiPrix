@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class ButtonPressed : MonoBehaviour
 {
-    string[] mapnames = { "africa_race", "india_race", "Ford", "Mazda" };
+    string[] mapnames = { "africa_race", "america_race", "china_race", "Mazda" };
     public Button yourButton;
     public AudioSource AudioSource;
     int randomNumber;
@@ -15,7 +15,7 @@ public class ButtonPressed : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        randomNumber = Random.Range(0, 2);
+        randomNumber = Random.Range(0, 3);
         Button btn = yourButton.GetComponent<Button>();
 		btn.onClick.AddListener(TaskOnClick);
     }
