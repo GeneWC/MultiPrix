@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class ButtonPressed_UpgradeWheels : MonoBehaviour
+public class ButtonPressed_UpgradeEngine : MonoBehaviour
 {
     public Button yourButton;
     public int pricet1 = 400;
@@ -14,18 +14,21 @@ public class ButtonPressed_UpgradeWheels : MonoBehaviour
     void Start()
     {
         Button btn = yourButton.GetComponent<Button>();
-		btn.onClick.AddListener(TaskOnClick);
+        btn.onClick.AddListener(TaskOnClick);
     }
-    void TaskOnClick(){
-        if(PlayerPrefs.GetInt("currency") > pricet1){
+    void TaskOnClick()
+    {
+        if (PlayerPrefs.GetInt("currency") > pricet1)
+        {
             AudioSource.Play(0);
-            Debug.Log("wheels upgraded!");
-            PlayerPrefs.SetFloat("acceleration", PlayerPrefs.GetFloat("acceleration") - .003f);
+            Debug.Log("engine upgraded!");
+            PlayerPrefs.SetFloat("velocity", PlayerPrefs.GetFloat("velocity") + 5);
             PlayerPrefs.SetInt("currency", PlayerPrefs.GetInt("currency") - pricet1);
             pricet1 += 100 + (100 * n);
             n++;
         }
-        else{
+        else
+        {
             Debug.Log("NOT ENOUGH MONEY!!!");
             BadAudio.Play(0);
         }
@@ -33,6 +36,6 @@ public class ButtonPressed_UpgradeWheels : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        text.text = ("Wheels" + "\n" + "Price: " + pricet1);
+        text.text = ("Engine" + "\n" + "Price: " + pricet1);
     }
 }

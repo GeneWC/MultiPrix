@@ -10,6 +10,7 @@ public class VariableInitializer : MonoBehaviour
         PlayerPrefs.SetInt("currency", 0);
         PlayerPrefs.SetFloat("acceleration", .01f);
         PlayerPrefs.SetInt("phase", 0);
+        PlayerPrefs.SetInt("velocity", 30);
         Debug.Log(PlayerPrefs.GetInt("phase"));
     }
 

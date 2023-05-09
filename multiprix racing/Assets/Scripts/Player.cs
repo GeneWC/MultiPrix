@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     float accel;
     float deccelrate = .1f;
     float maxSpeed = 31;
-    float velocity = 40;
+    float velocity;
     int delayStart = 0;
     int delayChange = 0;
     bool doneplaying = false;
@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
     void Start()
     {
        accel = PlayerPrefs.GetFloat("acceleration");
+       velocity = PlayerPrefs.GetFloat("velocity");
     }
 
     // Update is called once per frame
