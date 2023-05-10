@@ -75,7 +75,7 @@ public class UI_InputWindow : MonoBehaviour
         int num2 = random.Next(1, 12);
         answer = num1 * num2;
         question.SetText(num1 + " x " + num2);
-        player.GetComponent<Player>().setVelocity(5);
+        player.GetComponent<Player>().setVelocity(PlayerPrefs.GetFloat("increase"));
     }
 
     IEnumerator incorrectQuestion()
