@@ -22,7 +22,7 @@ public class Timer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(waitTime > 480)
+        if(waitTime > 960)
         {
             time--;
             text.text = "Time Remaining: " + time;

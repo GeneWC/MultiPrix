@@ -8,10 +8,11 @@ public class VariableInitializer : MonoBehaviour
     void Start()
     {
         PlayerPrefs.SetInt("currency", 0);
-        PlayerPrefs.SetFloat("acceleration", .01f);
+        PlayerPrefs.SetFloat("acceleration", .005f);
         PlayerPrefs.SetInt("phase", 0);
-        PlayerPrefs.SetInt("velocity", 30);
+        PlayerPrefs.SetFloat("maxSpeed", 31f);
         Debug.Log(PlayerPrefs.GetInt("phase"));
+        Debug.Log(PlayerPrefs.GetFloat("maxSpeed"));
     }
 
     // Update is called once per frame
