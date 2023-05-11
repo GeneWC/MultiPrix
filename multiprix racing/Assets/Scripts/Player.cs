@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
     int questionsAnsweredRight = 0;
     int questionsAnsweredWrong = 0;
     int points = 0;
-    
+    CarType car;
     
     public TMP_Text text, scoreText, questionsText, placementText;
   
@@ -118,7 +118,18 @@ public class Player : MonoBehaviour
             }
         }
     }
-   
+
+    enum CarType
+    {
+        Bluegatti,
+        Redrari,
+        Lamborgreeni,
+        Whiteyota,
+        Black_MW,
+        Pinksla
+    }
+
+
     public void setVelocity(float v)
     {
         if (velocity < maxSpeed - v)
