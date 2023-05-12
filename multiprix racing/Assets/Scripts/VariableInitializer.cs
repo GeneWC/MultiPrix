@@ -11,6 +11,7 @@ public class VariableInitializer : MonoBehaviour
         PlayerPrefs.SetFloat("acceleration", .005f);
         PlayerPrefs.SetInt("phase", 0);
         PlayerPrefs.SetFloat("maxSpeed", 31f);
+        PlayerPrefs.SetFloat("increase", 4f);
         Debug.Log(PlayerPrefs.GetInt("phase"));
         Debug.Log(PlayerPrefs.GetFloat("maxSpeed"));
     }

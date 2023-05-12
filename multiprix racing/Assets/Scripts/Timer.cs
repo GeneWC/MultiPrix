@@ -9,7 +9,7 @@ public class Timer : MonoBehaviour
 {
     public TMP_Text text;
     float time = 30f;
-    float waitTime = 0;
+    float waitTime;
     int randomNumber;
     string[] mapnames = { "africa_race", "america_race", "china_race", "Mazda" };
     // Start is called before the first frame update
@@ -17,12 +17,13 @@ public class Timer : MonoBehaviour
     {
         text.text = "Time Remaining: " + time;
         randomNumber = Random.Range(0, 2);
+        waitTime = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(waitTime > 960)
+        if(waitTime > 520)
         {
             time--;
             text.text = "Time Remaining: " + time;
