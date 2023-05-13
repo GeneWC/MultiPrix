@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - GameMusic
   layers:
   - Default
   - TransparentFX
@@ -24,7 +25,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - BackGround
   - 
   - 
   - 
@@ -40,4 +41,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: CanvasUI
+    uniqueID: 715532309
+    locked: 0
+  - name: Background Image
+    uniqueID: 3585742035
+    locked: 0
+  - name: Track
+    uniqueID: 3449867791
     locked: 0

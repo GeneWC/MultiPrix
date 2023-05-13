@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+
 public class UI_InputWindow : MonoBehaviour
 {
     private string input;
@@ -12,6 +13,7 @@ public class UI_InputWindow : MonoBehaviour
     public TextMeshProUGUI question;
     private int answer = 1;
     private GameObject player;
+    public AudioSource CorrectAudioSource, InorrectAudioSource;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,15 +21,7 @@ public class UI_InputWindow : MonoBehaviour
         question = transform.Find("Question").GetComponent<TextMeshProUGUI>();
         inputField = transform.Find("InputField (TMP)").GetComponent<TMP_InputField>();
         player = GameObject.Find("Player");
-        string qText = question.text;
-        string[] numsString = qText.Split(" x ");
-
-        for (int i = 0; i < numsString.Length; i++)
-        {
-            int curr = Int32.Parse(numsString[i]);
-            answer *= curr;
-        }
-        Debug.Log(answer);
+        GenerateNewQuestion();
         inputField.Select();
         inputField.ActivateInputField();
     }
@@ -35,34 +29,88 @@ public class UI_InputWindow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!inputField.text.Equals(""))
+        {
+            if (inputField.text[inputField.text.Length - 1] < 48 || inputField.text[inputField.text.Length - 1] > 57 || inputField.text.Length > 3)
+            {
+                inputField.text = inputField.text.Substring(0, inputField.text.Length - 1);
+            }
+        }
 
+        if (player.GetComponent<Player>().getEndGame())
+        {
+            inputField.DeactivateInputField();
+        }
+        
     }
 
 
 
     public void ReadStringInput(string s)
     {
-        System.Random random = new System.Random();
+        
         input = s;
 
         if (Int32.Parse(input) == answer)
         {
             Debug.Log("Correct!");
-            int num1 = random.Next(1, 12);
-            int num2 = random.Next(1, 12);
-            answer = num1 * num2;
-            question.SetText(num1 + " x " + num2);
-            player.GetComponent<Player>().setVelocity(5);
+            GenerateNewQuestion();
+            player.GetComponent<Player>().setQuestionsAnswered(true);
+             StartCoroutine(correctQuestion());
+
         }
         else
         {
-            Debug.Log("Incorrect");
+            StartCoroutine(incorrectQuestion());
         }
         inputField.text = "";
         inputField.Select();
         inputField.ActivateInputField();
     }
+
+    public void GenerateNewQuestion()
+    {
+        System.Random random = new System.Random();
+        int num1 = random.Next(1, 12);
+        int num2 = random.Next(1, 12);
+        answer = num1 * num2;
+        question.SetText(num1 + " x " + num2);
+        player.GetComponent<Player>().setVelocity(5);
+    }
+
+    IEnumerator incorrectQuestion()
+    {
+        Debug.Log("Incorrect");
+        inputField.DeactivateInputField();
+        inputField.image.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        inputField.image.color = Color.white;
+        yield return new WaitForSeconds(0.1f);
+        inputField.image.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        inputField.image.color = Color.white;
+        player.GetComponent<Player>().setQuestionsAnswered(false);
+        inputField.ActivateInputField();
+        InorrectAudioSource.Play(0);
+    }
+    IEnumerator correctQuestion()
+    {
+        Debug.Log("Correct");
+        inputField.DeactivateInputField();
+        inputField.image.color = Color.green;
+        yield return new WaitForSeconds(0.1f);
+        inputField.image.color = Color.white;
+        yield return new WaitForSeconds(0.1f);
+        inputField.image.color = Color.green;
+        yield return new WaitForSeconds(0.1f);
+        inputField.image.color = Color.white;
+        player.GetComponent<Player>().setQuestionsAnswered(false);
+        inputField.ActivateInputField();
+        CorrectAudioSource.Play(0);
+    }
 }
+
+
 
 
 
