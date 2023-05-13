@@ -228,6 +228,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 591f2b6af4bb74f43b73bcce3da1e7d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 480548205}
+  spriteArray:
+  - {fileID: 21300000, guid: d0b60560a49a11b4e9e72820d713b7a1, type: 3}
+  - {fileID: 21300000, guid: a74db880996f8494da25681fa3759a3f, type: 3}
+  - {fileID: 21300000, guid: 8227cb6ed5477264183321595d0091c0, type: 3}
+  - {fileID: 21300000, guid: d0b60560a49a11b4e9e72820d713b7a1, type: 3}
+  - {fileID: 21300000, guid: d0b60560a49a11b4e9e72820d713b7a1, type: 3}
+  - {fileID: 21300000, guid: d0b60560a49a11b4e9e72820d713b7a1, type: 3}
   text: {fileID: 1484549901}
   scoreText: {fileID: 1769555752}
   questionsText: {fileID: 647033873}
@@ -1463,6 +1471,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   question: {fileID: 884065840}
+  CorrectAudioSource: {fileID: 0}
+  InorrectAudioSource: {fileID: 0}
 --- !u!1 &1469066143
 GameObject:
   m_ObjectHideFlags: 0

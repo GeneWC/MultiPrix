@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 
 public class Player : MonoBehaviour
 {
-
+    
     float accel;
     float deccelrate = .1f;
     float maxSpeed;
@@ -25,6 +25,8 @@ public class Player : MonoBehaviour
     int questionsAnsweredWrong = 0;
     int points = 0;
     CarType car;
+    public SpriteRenderer spriteRenderer;
+    public Sprite[] spriteArray;
     
     public TMP_Text text, scoreText, questionsText, placementText;
   
@@ -34,6 +36,8 @@ public class Player : MonoBehaviour
        accel = PlayerPrefs.GetFloat("acceleration");
        maxSpeed = PlayerPrefs.GetFloat("maxSpeed");
        velocity = maxSpeed;
+       
+       spriteRenderer.sprite = spriteArray[PlayerPrefs.GetInt("CarSkin")];
     }
 
     // Update is called once per frame
@@ -205,6 +209,9 @@ public class Player : MonoBehaviour
         scoreText.text = ("Points earned: " + points);
         Debug.Log(points);
         PlayerPrefs.SetInt("currency", points);
+    }
+    public void ChangeSprite(){
+            spriteRenderer.sprite = spriteArray[PlayerPrefs.GetInt("CarSkin")];
     }
 
 
