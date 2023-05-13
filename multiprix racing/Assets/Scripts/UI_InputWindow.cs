@@ -55,7 +55,7 @@ public class UI_InputWindow : MonoBehaviour
         {
             Debug.Log("Correct!");
             GenerateNewQuestion();
-            player.GetComponent<Player>().setQuestionsAnswered(true);
+            
              StartCoroutine(correctQuestion());
 
         }
@@ -104,7 +104,7 @@ public class UI_InputWindow : MonoBehaviour
         inputField.image.color = Color.green;
         yield return new WaitForSeconds(0.1f);
         inputField.image.color = Color.white;
-        player.GetComponent<Player>().setQuestionsAnswered(false);
+        player.GetComponent<Player>().setQuestionsAnswered(true);
         inputField.ActivateInputField();
         CorrectAudioSource.Play(0);
     }
