@@ -10,7 +10,7 @@ public class RandomQuipGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        randomNumber = Random.Range(0, 10);
+        randomNumber = Random.Range(0, 15);
     }
 
     // Update is called once per frame
@@ -19,46 +19,50 @@ public class RandomQuipGenerator : MonoBehaviour
         switch (randomNumber)
         {
             case 0:
-            Debug.Log("1 Quote");
             text.text = "WHEELS NOT INCLUDED";
             break;
             case 1:
-            Debug.Log("2 Quote");
             text.text = "IS SOMETHING BURNING?";
             break;
             case 2:
-            Debug.Log("3 Quote");
             text.text = "2 x 2 = 5?";
             break;
             case 3:
-            Debug.Log("4 Quote");
             text.text = "MAAAAAAAAAAAAAATH";
             break;
             case 4:
-            Debug.Log("5 Quote");
-            text.text = "WHERE ARE MY PANTS";
+            text.text = "WHERE ARE MY PAAAANTS"; // do kids even get this reference nowadays
             break;
             case 5:
-            Debug.Log("6 Quote");
             text.text = "CAN'T STOP THIS";
             break;
             case 6:
-            Debug.Log("7 Quote");
             text.text = "PIT STOPS ARE FOR LOSERS";
             break;
             case 7:
-            Debug.Log("8 Quote");
             text.text = "#MATH4LYFE";
             break;
             case 8:
-            Debug.Log("9 Quote");
             text.text = "START YOUR MATH ENGINES";
             break;
             case 9:
-            Debug.Log("10 Quote");
             text.text = "CAN'T END ON A LOSS";
             break;
-            
+            case 10:
+            text.text = "JAMES IS BRITISH!";
+            break;
+            case 11:
+            text.text = "ALSO TRY ARCADEMICS!";
+            break;
+            case 12:
+            text.text = "UPGRADES, PEOPLE. UPGRADES!";
+            break;
+            case 13:
+            text.text = "IT'S MONDAY! IT'S TUESDAY!";
+            break;
+            case 14:
+            text.text = "SERGIO, WHAT ARE YOU DOING!?";
+            break;
         }
         }
 }

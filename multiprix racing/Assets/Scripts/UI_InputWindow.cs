@@ -57,7 +57,7 @@ public class UI_InputWindow : MonoBehaviour
             GenerateNewQuestion();
             player.GetComponent<Player>().setQuestionsAnswered(true);
              StartCoroutine(correctQuestion());
-
+            player.GetComponent<Player>().setVelocity(3);
         }
         else
         {

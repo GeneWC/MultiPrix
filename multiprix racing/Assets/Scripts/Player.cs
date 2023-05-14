@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
     int points = 0;
     CarType car;
     public SpriteRenderer spriteRenderer;
-    public Sprite[] spriteArray;
+    [SerializeField] public Sprite[] spriteArray = new Sprite[6];
     
     public TMP_Text text, scoreText, questionsText, placementText;
   
@@ -36,23 +36,24 @@ public class Player : MonoBehaviour
        accel = PlayerPrefs.GetFloat("acceleration");
        maxSpeed = PlayerPrefs.GetFloat("maxSpeed");
        velocity = maxSpeed;
-       
-       spriteRenderer.sprite = spriteArray[PlayerPrefs.GetInt("CarSkin")];
+        Debug.Log("Skin: " + PlayerPrefs.GetInt("carSkin"));
+        spriteRenderer.sprite = spriteArray[PlayerPrefs.GetInt("carSkin")];
+        spriteRenderer.drawMode = SpriteDrawMode.Sliced;
+        spriteRenderer.size = new Vector2(2.5f, 2.5f);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-        Debug.Log(accel);
-        Debug.Log(velocity);
+
         if (velocity < maxSpeed - 1)
         {
-            text.text = "" + (int)velocity + " mph";
+            text.text = "" + (int)velocity * 3 + " mph";
             
         }
         else{
-            text.text = "" + (int)velocity + " mph" + "\n" + "(MAX SPEED!)";
+            text.text = "" + (int)velocity * 3 + " mph" + "\n" + "(MAX SPEED!)";
         }
         if (delayStart > 180)
         {

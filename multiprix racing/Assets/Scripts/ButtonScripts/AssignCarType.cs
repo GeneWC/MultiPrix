@@ -20,31 +20,32 @@ public class AssignCarType : MonoBehaviour
 
     // Start is called before the first frame update
     public void TaskOnClick() {
-        switch (yourButton.name)
+
+        if (yourButton.name.Equals("Blue"))
         {
-            case "Blue":
-                PlayerPrefs.SetInt("carSkin", 0);
-                break;
-            case "Red":
-                PlayerPrefs.SetInt("carSkin", 1);
-                break;
-            case "Green":
-                PlayerPrefs.SetInt("carSkin", 2);
-                break;
-            case "Pink":
-                PlayerPrefs.SetInt("carSkin", 3);
-                break;
-            case "Black":
-                PlayerPrefs.SetInt("carSkin", 4);
-                break;
-            case "White":
-                PlayerPrefs.SetInt("carSkin", 5);
-                break;
-            default:
-                PlayerPrefs.SetInt("carSkin", -1);
-                break;
+            PlayerPrefs.SetInt("carSkin", 0);
         }
-         Destroy(GameObject.Find("Main Title Track"));
+        if (yourButton.name.Equals("Red"))
+        {
+            PlayerPrefs.SetInt("carSkin", 1);
+        }
+        if (yourButton.name.Equals("Green"))
+        {
+            PlayerPrefs.SetInt("carSkin", 2);
+        }
+        if (yourButton.name.Equals("Pink"))
+        {
+            PlayerPrefs.SetInt("carSkin", 3);
+        }
+        if (yourButton.name.Equals("Black"))
+        {
+            PlayerPrefs.SetInt("carSkin", 4);
+        }
+        if (yourButton.name.Equals("White"))
+        {
+            PlayerPrefs.SetInt("carSkin", 5);
+        } 
+        Destroy(GameObject.Find("Main Title Track"));
         SceneManager.LoadScene(mapnames[randomNumber]);
 
         Debug.Log(PlayerPrefs.GetInt("carSkin"));
