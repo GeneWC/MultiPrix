@@ -36,6 +36,6 @@ public class ButtonPressed_UpgradeEngine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        text.text = ("Engine" + "\n" + "Price: " + pricet1);
+        text.text = ("Purchase: " + pricet1);
     }
 }

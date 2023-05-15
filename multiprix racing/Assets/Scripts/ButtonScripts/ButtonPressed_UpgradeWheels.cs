@@ -33,6 +33,6 @@ public class ButtonPressed_UpgradeWheels : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        text.text = ("Wheels" + "\n" + "Price: " + pricet1);
+        text.text = ("Purchase: " + pricet1);
     }
 }

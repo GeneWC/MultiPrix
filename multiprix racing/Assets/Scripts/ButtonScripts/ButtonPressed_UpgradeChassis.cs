@@ -33,6 +33,6 @@ public class ButtonPressed_UpgradeChassis : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        text.text = ("Chassis" + "\n" + "Price: " + pricet1);
+        text.text = ("Purchase: " + pricet1);
     }
 }
