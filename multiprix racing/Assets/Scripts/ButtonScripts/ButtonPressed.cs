@@ -8,7 +8,7 @@ public class ButtonPressed : MonoBehaviour
 {
     
     public Button yourButton;
-    public AudioSource AudioSource;
+    //public AudioSource AudioSource;
     
    
        
@@ -21,7 +21,7 @@ public class ButtonPressed : MonoBehaviour
     }
     void TaskOnClick(){
         SceneManager.LoadScene("character_select");
-        AudioSource.Play(0);
+        //AudioSource.Play(0);
        
         
 	}

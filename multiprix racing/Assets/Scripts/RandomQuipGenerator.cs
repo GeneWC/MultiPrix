@@ -63,6 +63,9 @@ public class RandomQuipGenerator : MonoBehaviour
             case 14:
             text.text = "SERGIO, WHAT ARE YOU DOING!?";
             break;
+            case 15:
+            text.text = "MR MON MON!!!";
+            break;
         }
         }
 }

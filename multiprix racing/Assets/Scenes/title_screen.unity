@@ -718,6 +718,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   yourButton: {fileID: 704071017}
+  AudioSource: {fileID: 805121059}
 --- !u!114 &704071017
 MonoBehaviour:
   m_ObjectHideFlags: 0
