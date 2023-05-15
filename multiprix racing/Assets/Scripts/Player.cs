@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
         Debug.Log("Skin: " + PlayerPrefs.GetInt("carSkin"));
         spriteRenderer.sprite = spriteArray[PlayerPrefs.GetInt("carSkin")];
         spriteRenderer.drawMode = SpriteDrawMode.Sliced;
-        spriteRenderer.size = new Vector2(2.5f, 2.5f);
+        spriteRenderer.size = new Vector2(2f, 2f);
 
     }
 
