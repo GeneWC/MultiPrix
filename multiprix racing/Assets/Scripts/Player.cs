@@ -6,14 +6,16 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
+using Unity.Netcode;
+using Cinemachine;
 
-public class Player : MonoBehaviour
+public class Player : NetworkBehaviour
 {
 
     float accel;
     float deccelrate = .1f;
-    float maxSpeed;
-    float velocity;
+    public float maxSpeed;
+    public float velocity;
     int delayStart = 0;
     int delayChange = 0;
     bool doneplaying = false;
@@ -24,7 +26,10 @@ public class Player : MonoBehaviour
     int questionsAnsweredRight = 0;
     int questionsAnsweredWrong = 0;
     int points = 0;
-    
+
+    //keeping track of networking players
+    public static int playerCounter = 1;
+    public int m_player = 1;
     
     public TMP_Text text, scoreText, questionsText, placementText;
   
@@ -36,19 +41,33 @@ public class Player : MonoBehaviour
        velocity = maxSpeed;
     }
 
+    public override void OnNetworkSpawn() {
+        m_player = playerCounter++;
+        transform.position = new Vector3(-7.63f, 2.99f, 0); //3 * (2 - m_player)
+        GameObject followPlayerCameraObject = GameObject.Find("CM vcam1");
+        CinemachineVirtualCamera followPlayerCamera = followPlayerCameraObject.GetComponent<CinemachineVirtualCamera>();
+        followPlayerCamera.Follow = transform;
+        GameObject inputFieldObject = GameObject.Find("UI_InputWindow");
+        inputFieldObject.GetComponent<UI_InputWindow>().player = this;
+
+    }
+
     // Update is called once per frame
     void Update()
     {
-        
+        if(!IsOwner) { return; }
+
         Debug.Log(accel);
         Debug.Log(velocity);
         if (velocity < maxSpeed - 1)
         {
-            text.text = "" + (int)velocity + " mph";
+            //TODO
+            //text.text = "" + (int)velocity + " mph";
             
         }
         else{
-            text.text = "" + (int)velocity + " mph" + "\n" + "(MAX SPEED!)";
+            //TODO
+            //text.text = "" + (int)velocity + " mph" + "\n" + "(MAX SPEED!)";
         }
         if (delayStart > 180)
         {
@@ -75,11 +94,12 @@ public class Player : MonoBehaviour
                     endGame = false;
                     raceEnd = false;
                 }
+                /* TODO
                 questionsText.text = "Questions Answered: " + questionsAnsweredRight + "/" + (questionsAnsweredRight + questionsAnsweredWrong);
                 placementText.text = "You placed" + "1st!";
                 Debug.Log("Percent Accuracy: " + ( 100 * (double)questionsAnsweredRight) / (questionsAnsweredRight + questionsAnsweredWrong));
                 doneplaying = true;
-                calculatePoints();
+                calculatePoints(); */
                     
                 
                    
@@ -199,3 +219,4 @@ public class Player : MonoBehaviour
 
 
 }
+

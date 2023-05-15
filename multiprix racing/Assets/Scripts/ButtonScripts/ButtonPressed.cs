@@ -20,7 +20,7 @@ public class ButtonPressed : MonoBehaviour
 		btn.onClick.AddListener(TaskOnClick);
     }
     void TaskOnClick(){
-        SceneManager.LoadScene(mapnames[randomNumber]);
+        SceneManager.LoadScene(mapnames[2]);
         AudioSource.Play(0);
         Destroy(GameObject.Find("Main Title Track"));
         
