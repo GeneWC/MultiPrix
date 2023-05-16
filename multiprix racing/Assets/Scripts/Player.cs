@@ -6,12 +6,13 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
+using System.Diagnostics;
 
 public class Player : MonoBehaviour
 {
     
     float accel;
-    float deccelrate = .1f;
+    float deccelrate = 10f;
     float maxSpeed;
     float velocity;
     int delayStart = 0;
@@ -20,6 +21,8 @@ public class Player : MonoBehaviour
     bool endGame = false;
     bool raceEnd = false;
     bool endGameAlreadyRan = false;
+    public Stopwatch raceTime;
+
     // points and stuff
     int questionsAnsweredRight = 0;
     int questionsAnsweredWrong = 0;
@@ -28,7 +31,7 @@ public class Player : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     [SerializeField] public Sprite[] spriteArray = new Sprite[6];
     
-    public TMP_Text text, scoreText, questionsText, placementText;
+    public TMP_Text text, scoreText, questionsText, placementText, timerText;
   
     // Start is called before the first frame update
     void Start()
@@ -36,10 +39,10 @@ public class Player : MonoBehaviour
        accel = PlayerPrefs.GetFloat("acceleration");
        maxSpeed = PlayerPrefs.GetFloat("maxSpeed");
        velocity = maxSpeed;
-        Debug.Log("Skin: " + PlayerPrefs.GetInt("carSkin"));
         spriteRenderer.sprite = spriteArray[PlayerPrefs.GetInt("carSkin")];
         spriteRenderer.drawMode = SpriteDrawMode.Sliced;
         spriteRenderer.size = new Vector2(2f, 2f);
+        raceTime = new Stopwatch();
 
     }
 
@@ -57,6 +60,10 @@ public class Player : MonoBehaviour
         }
         if (delayStart > 180)
         {
+            if (!raceTime.IsRunning)
+            {
+                raceTime.Start();
+            }
             transform.position += new Vector3((velocity) * Time.deltaTime, 0, 0);
             if (velocity > 12 && !endGame)
             {
@@ -64,10 +71,10 @@ public class Player : MonoBehaviour
             }
             if (endGame)
             {
-                
+                raceTime.Stop();
                 if (velocity > 0)
                 {
-                    velocity -= deccelrate;
+                    velocity = 0;
                 }
                 else
                 {
@@ -81,8 +88,8 @@ public class Player : MonoBehaviour
                     raceEnd = false;
                 }
                 questionsText.text = "Questions Answered: " + questionsAnsweredRight + "/" + (questionsAnsweredRight + questionsAnsweredWrong);
-                placementText.text = "You placed" + "1st!";
-                Debug.Log("Percent Accuracy: " + ( 100 * (double)questionsAnsweredRight) / (questionsAnsweredRight + questionsAnsweredWrong));
+                placementText.text = "You placed: " + "1st!";
+                timerText.text = "Time: " + raceTime.Elapsed.TotalSeconds.ToString("#.##") + " seconds";
                 doneplaying = true;
                 calculatePoints();
                     
@@ -98,7 +105,6 @@ public class Player : MonoBehaviour
 
         if (transform.position.x > 920 && !endGameAlreadyRan)
         {
-            accel = .1f;
             endGame = true;
             endGameAlreadyRan = true;
             raceEnd = true;
@@ -169,8 +175,7 @@ public class Player : MonoBehaviour
     public void calculatePoints()
     {
         double percentAccuracy = Math.Round(100 * (double)(questionsAnsweredRight) / (questionsAnsweredRight + questionsAnsweredWrong), 2);
-        Debug.Log("Questions Answered: " + questionsAnsweredRight + "/" + (questionsAnsweredRight + questionsAnsweredWrong));
-        Debug.Log("Percent Accuracy: " + percentAccuracy);
+
 
         // award points for correct answers, take away points for incorrect answers
         points += (questionsAnsweredRight * 50);
@@ -187,7 +192,6 @@ public class Player : MonoBehaviour
         if (questionsAnsweredRight + questionsAnsweredWrong < 10)
         {
             // give no bonus if too little questions answered
-            Debug.Log("Not enough questions answered for accuracy bonus");
         }
         else if (percentAccuracy == 100.0d)
         {
@@ -208,7 +212,6 @@ public class Player : MonoBehaviour
 
         // output num of points
         scoreText.text = ("Points earned: " + points);
-        Debug.Log(points);
         PlayerPrefs.SetInt("currency", points);
     }
     public void ChangeSprite(){

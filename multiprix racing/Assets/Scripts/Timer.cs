@@ -11,7 +11,7 @@ public class Timer : MonoBehaviour
     float time = 30f;
     float waitTime;
     int randomNumber;
-    string[] mapnames = { "africa_race", "america_race", "china_race", "Mazda" };
+    string mapnames = "america_race";
     // Start is called before the first frame update
     void Start()
     {
