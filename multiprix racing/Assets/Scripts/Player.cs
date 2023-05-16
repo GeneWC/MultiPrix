@@ -43,10 +43,14 @@ public class Player : NetworkBehaviour
 
     public override void OnNetworkSpawn() {
         m_player = playerCounter++;
-        transform.position = new Vector3(-7.63f, 2.99f, 0); //3 * (2 - m_player)
+        transform.position = new Vector3(-7.63f, (4.5f - (m_player * 1.5f)), 0); 
+        if(!IsOwner) { return; }
+
         GameObject followPlayerCameraObject = GameObject.Find("CM vcam1");
         CinemachineVirtualCamera followPlayerCamera = followPlayerCameraObject.GetComponent<CinemachineVirtualCamera>();
         followPlayerCamera.Follow = transform;
+        var transposer = followPlayerCamera.GetCinemachineComponent<CinemachineTransposer>();
+        transposer.m_FollowOffset = new Vector3(7.63f, (-2.8f + (m_player - 1) * 1.5f), -10.6f);
         GameObject inputFieldObject = GameObject.Find("UI_InputWindow");
         inputFieldObject.GetComponent<UI_InputWindow>().player = this;
 
@@ -94,6 +98,7 @@ public class Player : NetworkBehaviour
                     endGame = false;
                     raceEnd = false;
                 }
+
                 /* TODO
                 questionsText.text = "Questions Answered: " + questionsAnsweredRight + "/" + (questionsAnsweredRight + questionsAnsweredWrong);
                 placementText.text = "You placed" + "1st!";
