@@ -8,7 +8,7 @@ public class AssignCarType : MonoBehaviour
 {
     public Button yourButton;
     int randomNumber;
-    string[] mapnames = { "africa_race", "america_race", "china_race", "Mazda" };
+    string mapName = "america_race";
 
     private void Start()
     {
@@ -46,7 +46,7 @@ public class AssignCarType : MonoBehaviour
             PlayerPrefs.SetInt("carSkin", 5);
         } 
         Destroy(GameObject.Find("Main Title Track"));
-        SceneManager.LoadScene(mapnames[randomNumber]);
+        SceneManager.LoadScene(mapName);
 
         Debug.Log(PlayerPrefs.GetInt("carSkin"));
 

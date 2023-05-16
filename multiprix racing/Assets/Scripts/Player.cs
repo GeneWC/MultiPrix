@@ -49,16 +49,16 @@ public class Player : MonoBehaviour
 
         if (velocity < maxSpeed - 1)
         {
-            text.text = "" + (int)velocity * 3 + " mph";
+            text.text = "" + (int)velocity * 3.2 + " mph";
             
         }
         else{
-            text.text = "" + (int)velocity * 3 + " mph" + "\n" + "(MAX SPEED!)";
+            text.text = "" + (int)velocity * 3.2 + " mph" + "\n" + "(MAX SPEED!)";
         }
         if (delayStart > 180)
         {
             transform.position += new Vector3((velocity) * Time.deltaTime, 0, 0);
-            if (velocity > 0 && !endGame)
+            if (velocity > 12 && !endGame)
             {
                 velocity -= accel;
             }

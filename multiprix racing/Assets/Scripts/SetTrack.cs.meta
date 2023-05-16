@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 655ea20aebecaf34bb38e0af5506215b
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - audio: {instanceID: 0}
+  - americaMus: {fileID: 8300000, guid: 53f8ed30c4fea37469f50a67ac72f27b, type: 3}
+  - chinaMus: {fileID: 8300000, guid: bb9feeba16ca74749a00f61d9182ddd8, type: 3}
+  - africaMus: {fileID: 8300000, guid: fe67a91d364738b49bc95f06508e6643, type: 3}
+  - bkg: {instanceID: 0}
+  - americaBkg: {fileID: 21300000, guid: bcbbefaad0ab27f47a04d3ed07aaea2f, type: 3}
+  - chinaBkg: {fileID: 21300000, guid: 19e4f0070fdaf6e40b663113dc9ae1e3, type: 3}
+  - africaBkg: {fileID: 21300000, guid: 91384ee91ddcb04418efc05f9be5594e, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -2439,6 +2439,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2087085632}
   - component: {fileID: 2087085633}
+  - component: {fileID: 2087085634}
   m_Layer: 5
   m_Name: Track
   m_TagString: GameMusic
@@ -2476,8 +2477,8 @@ AudioSource:
   m_GameObject: {fileID: 2087085631}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 53f8ed30c4fea37469f50a67ac72f27b, type: 3}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 449304b50cc51d34a9495270a9964312, type: 2}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -2563,3 +2564,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2087085634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2087085631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 655ea20aebecaf34bb38e0af5506215b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audio: {fileID: 2087085633}
+  americaMus: {fileID: 8300000, guid: 53f8ed30c4fea37469f50a67ac72f27b, type: 3}
+  chinaMus: {fileID: 8300000, guid: bb9feeba16ca74749a00f61d9182ddd8, type: 3}
+  africaMus: {fileID: 8300000, guid: fe67a91d364738b49bc95f06508e6643, type: 3}
+  bkg: {fileID: 1238655558}
+  americaBkg: {fileID: 21300000, guid: bcbbefaad0ab27f47a04d3ed07aaea2f, type: 3}
+  chinaBkg: {fileID: 21300000, guid: 19e4f0070fdaf6e40b663113dc9ae1e3, type: 3}
+  africaBkg: {fileID: 21300000, guid: 91384ee91ddcb04418efc05f9be5594e, type: 3}
