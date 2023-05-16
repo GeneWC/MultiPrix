@@ -11,23 +11,43 @@ public class Timer : MonoBehaviour
     float time = 30f;
     float waitTime;
     int randomNumber;
-    string[] mapnames = { "africa_race", "america_race", "china_race", "Mazda" };
+    bool runningoutoftime;
+   
+
     // Start is called before the first frame update
     void Start()
     {
         text.text = "Time Remaining: " + time;
         randomNumber = Random.Range(0, 2);
         waitTime = 0;
+        runningoutoftime = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(waitTime > 440)
+        
+        if (waitTime > 480)
         {
+            if(time < 11)
+            {
+                runningoutoftime = true;
+            }
+            if (runningoutoftime)
+            {
+                if(time % 2 == 0)
+                {
+                    text.color = new Color(255, 0, 0);
+                }
+                else
+                {
+                    text.color = new Color(255, 255, 255);
+                }
+            }
             time--;
             text.text = "Time Remaining: " + time;
             waitTime = 0;
+            
         }
         else
         {
@@ -36,7 +56,7 @@ public class Timer : MonoBehaviour
         if(time == 0)
         {
             
-            SceneManager.LoadScene(mapnames[randomNumber]);
+            SceneManager.LoadScene("general_race");
         }
     }
 }

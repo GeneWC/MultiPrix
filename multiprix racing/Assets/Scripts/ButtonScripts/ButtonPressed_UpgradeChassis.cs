@@ -28,6 +28,10 @@ public class ButtonPressed_UpgradeChassis : MonoBehaviour
         else{
             Debug.Log("NOT ENOUGH MONEY!!!");
             BadAudio.Play(0);
+            text.color = new Color(255, 0, 0);
+            text.color = new Color(255, 255, 255);
+            text.color = new Color(255, 0, 0);
+            text.color = new Color(255, 255, 255);
         }
     }
     // Update is called once per frame
