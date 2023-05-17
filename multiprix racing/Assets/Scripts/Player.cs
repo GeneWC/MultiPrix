@@ -16,7 +16,6 @@ public class Player : NetworkBehaviour
     float deccelrate = .1f;
     public float maxSpeed;
     public float velocity;
-    int delayStart = 0;
     int delayChange = 0;
     bool doneplaying = false;
     bool endGame = false;
@@ -30,22 +29,18 @@ public class Player : NetworkBehaviour
     //keeping track of networking players
     public static int playerCounter = 1;
     public int m_player = 1;
-    
+    public NetworkVariable<bool> started = new NetworkVariable<bool>(false);
     public TMP_Text text, scoreText, questionsText, placementText;
   
     // Start is called before the first frame update
-    void Start()
-    {
-       accel = PlayerPrefs.GetFloat("acceleration");
-       maxSpeed = PlayerPrefs.GetFloat("maxSpeed");
-       velocity = maxSpeed;
-    }
-
     public override void OnNetworkSpawn() {
+        accel = PlayerPrefs.GetFloat("acceleration");
+        maxSpeed = PlayerPrefs.GetFloat("maxSpeed");
+        velocity = maxSpeed;
         m_player = playerCounter++;
         transform.position = new Vector3(-7.63f, (4.5f - (m_player * 1.5f)), 0); 
         if(!IsOwner) { return; }
-
+        if(IsServer) { return; }
         GameObject followPlayerCameraObject = GameObject.Find("CM vcam1");
         CinemachineVirtualCamera followPlayerCamera = followPlayerCameraObject.GetComponent<CinemachineVirtualCamera>();
         followPlayerCamera.Follow = transform;
@@ -60,7 +55,6 @@ public class Player : NetworkBehaviour
     void Update()
     {
         if(!IsOwner) { return; }
-
         Debug.Log(accel);
         Debug.Log(velocity);
         if (velocity < maxSpeed - 1)
@@ -73,7 +67,7 @@ public class Player : NetworkBehaviour
             //TODO
             //text.text = "" + (int)velocity + " mph" + "\n" + "(MAX SPEED!)";
         }
-        if (delayStart > 180)
+        if (started.Value)
         {
             transform.position += new Vector3((velocity) * Time.deltaTime, 0, 0);
             if (velocity > 0 && !endGame)
@@ -110,11 +104,6 @@ public class Player : NetworkBehaviour
                    
                 }
             }
-        
-        else
-        {
-            delayStart++;
-        }
 
         if (transform.position.x > 920 && !endGameAlreadyRan)
         {

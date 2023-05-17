@@ -57,7 +57,7 @@ public class UI_InputWindow : MonoBehaviour
 
     public void ReadStringInput(string s)
     {
-        if (player == null) { return; }
+        if (player == null || s == null || s.Equals("")) { return; }
         input = s;
 
         if (Int32.Parse(input) == answer) {
