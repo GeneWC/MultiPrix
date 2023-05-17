@@ -7,7 +7,7 @@ using TMPro;
 public class ButtonPressed_UpgradeChassis : MonoBehaviour
 {
     public Button yourButton;
-    public int pricet1 = 450;
+    public int pricet1 = 550;
     public int n = 1;
     public AudioSource AudioSource, BadAudio;
     public TMP_Text text;
@@ -17,7 +17,7 @@ public class ButtonPressed_UpgradeChassis : MonoBehaviour
 		btn.onClick.AddListener(TaskOnClick);
     }
     void TaskOnClick(){
-        if(PlayerPrefs.GetInt("currency") > pricet1){
+        if(PlayerPrefs.GetInt("currency") >= pricet1){
             AudioSource.Play(0);
             Debug.Log("chassis upgraded!");
             PlayerPrefs.SetFloat("maxSpeed", PlayerPrefs.GetFloat("maxSpeed") + 5);

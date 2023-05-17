@@ -17,10 +17,10 @@ public class ButtonPressed_UpgradeWheels : MonoBehaviour
 		btn.onClick.AddListener(TaskOnClick);
     }
     void TaskOnClick(){
-        if(PlayerPrefs.GetInt("currency") > pricet1){
+        if(PlayerPrefs.GetInt("currency") >= pricet1){
             AudioSource.Play(0);
             Debug.Log("wheels upgraded!");
-            PlayerPrefs.SetFloat("acceleration", PlayerPrefs.GetFloat("acceleration") - .001f);
+            PlayerPrefs.SetFloat("acceleration", PlayerPrefs.GetFloat("acceleration") - .0006f);
             PlayerPrefs.SetInt("currency", PlayerPrefs.GetInt("currency") - pricet1);
             pricet1 += 100 + (100 * n);
             n++;

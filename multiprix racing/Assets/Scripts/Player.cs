@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
 {
     
     float accel;
+    public AudioSource audio;
+    private Animation anim;
     float deccelrate = .1f;
     float maxSpeed;
     float velocity;
@@ -33,6 +35,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        anim = gameObject.GetComponent<Animation>();
        accel = PlayerPrefs.GetFloat("acceleration");
        maxSpeed = PlayerPrefs.GetFloat("maxSpeed");
        velocity = maxSpeed;
@@ -67,7 +70,8 @@ public class Player : MonoBehaviour
                 
                 if (velocity > 0)
                 {
-                    velocity -= deccelrate;
+                    velocity = 0;
+                    audio.Play(0);
                 }
                 else
                 {
@@ -157,6 +161,7 @@ public class Player : MonoBehaviour
     {
         if (right)
         {
+            
             questionsAnsweredRight++;
         }
         else

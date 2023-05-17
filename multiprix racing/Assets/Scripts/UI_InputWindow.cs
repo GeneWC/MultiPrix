@@ -9,6 +9,7 @@ using TMPro;
 public class UI_InputWindow : MonoBehaviour
 {
     private string input;
+    private Animation anim;
     private TMP_InputField inputField;
     public TextMeshProUGUI question;
     private int answer = 1;
@@ -75,11 +76,12 @@ public class UI_InputWindow : MonoBehaviour
         int num2 = random.Next(1, 12);
         answer = num1 * num2;
         question.SetText(num1 + " x " + num2);
-        player.GetComponent<Player>().setVelocity(PlayerPrefs.GetFloat("increase"));
+        player.GetComponent<Player>().setVelocity(PlayerPrefs.GetFloat("increase")/5f);
     }
 
     IEnumerator incorrectQuestion()
     {
+        
         Debug.Log("Incorrect");
         inputField.DeactivateInputField();
         inputField.image.color = Color.red;
@@ -95,6 +97,7 @@ public class UI_InputWindow : MonoBehaviour
     }
     IEnumerator correctQuestion()
     {
+        
         Debug.Log("Correct");
         inputField.DeactivateInputField();
         inputField.image.color = Color.green;
@@ -104,7 +107,7 @@ public class UI_InputWindow : MonoBehaviour
         inputField.image.color = Color.green;
         yield return new WaitForSeconds(0.1f);
         inputField.image.color = Color.white;
-        player.GetComponent<Player>().setQuestionsAnswered(false);
+        player.GetComponent<Player>().setQuestionsAnswered(true);
         inputField.ActivateInputField();
         CorrectAudioSource.Play(0);
     }

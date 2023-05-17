@@ -7,7 +7,7 @@ using TMPro;
 public class ButtonPressed_UpgradeEngine : MonoBehaviour
 {
     public Button yourButton;
-    public int pricet1 = 600;
+    public int pricet1 = 450;
     public int n = 0;
     public AudioSource AudioSource, BadAudio;
     public TMP_Text text;
@@ -18,13 +18,13 @@ public class ButtonPressed_UpgradeEngine : MonoBehaviour
     }
     void TaskOnClick()
     {
-        if (PlayerPrefs.GetInt("currency") > pricet1)
+        if (PlayerPrefs.GetInt("currency") >= pricet1)
         {
             AudioSource.Play(0);
             Debug.Log("engine upgraded!");
             PlayerPrefs.SetFloat("increase", PlayerPrefs.GetFloat("increase") + 2);
             PlayerPrefs.SetInt("currency", PlayerPrefs.GetInt("currency") - pricet1);
-            pricet1 += 100 + (100 * n);
+            pricet1 += 100 + (150 * n);
             n++;
         }
         else
