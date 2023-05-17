@@ -7,7 +7,7 @@ using TMPro;
 public class ButtonPressed_UpgradeChassis : MonoBehaviour
 {
     public Button yourButton;
-    public int pricet1 = 550;
+    public int pricet1;
     public int n = 1;
     public AudioSource AudioSource, BadAudio;
     public TMP_Text text;
@@ -22,8 +22,8 @@ public class ButtonPressed_UpgradeChassis : MonoBehaviour
             Debug.Log("chassis upgraded!");
             PlayerPrefs.SetFloat("maxSpeed", PlayerPrefs.GetFloat("maxSpeed") + 4);
             PlayerPrefs.SetInt("currency", PlayerPrefs.GetInt("currency") - pricet1);
-            pricet1 += 100 + (50 * n);
-            n++;
+            PlayerPrefs.SetInt("pricechassis", PlayerPrefs.GetInt("pricechassis") + 100 + (350 * PlayerPrefs.GetInt("pricechassisex")));
+            PlayerPrefs.SetInt("pricechassisex", PlayerPrefs.GetInt("pricechassisex") + 1);
         }
         else{
             Debug.Log("NOT ENOUGH MONEY!!!");
@@ -37,7 +37,8 @@ public class ButtonPressed_UpgradeChassis : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (PlayerPrefs.GetFloat("maxSpeed") > 50)
+        pricet1 = PlayerPrefs.GetInt("pricechassis");
+        if (PlayerPrefs.GetFloat("maxSpeed") > 58)
         {
             text.text = "MAX LEVEL";
             pricet1 = 999999999;

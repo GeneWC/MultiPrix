@@ -9,7 +9,7 @@ using TMPro;
 public class UI_InputWindow : MonoBehaviour
 {
     private string input;
-    private Animation anim;
+    
     private TMP_InputField inputField;
     public TextMeshProUGUI question;
     private int answer = 1;
@@ -58,10 +58,11 @@ public class UI_InputWindow : MonoBehaviour
             GenerateNewQuestion();
             player.GetComponent<Player>().setQuestionsAnswered(true);
              StartCoroutine(correctQuestion());
-            player.GetComponent<Player>().setVelocity(3);
+             player.GetComponent<Player>().setVelocity(PlayerPrefs.GetFloat("increase")/10f);
         }
         else
         {
+            player.GetComponent<Player>().setVelocity(-2);
             StartCoroutine(incorrectQuestion());
         }
         inputField.text = "";
@@ -76,7 +77,7 @@ public class UI_InputWindow : MonoBehaviour
         int num2 = random.Next(1, 12);
         answer = num1 * num2;
         question.SetText(num1 + " x " + num2);
-        player.GetComponent<Player>().setVelocity(PlayerPrefs.GetFloat("increase")/5f);
+        
     }
 
     IEnumerator incorrectQuestion()

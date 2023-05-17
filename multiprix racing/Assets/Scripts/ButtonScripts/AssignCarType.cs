@@ -8,7 +8,7 @@ public class AssignCarType : MonoBehaviour
 {
     public Button yourButton;
     int randomNumber;
-    string mapName = "general_race";
+    string mapName = "Briefing";
 
     private void Start()
     {

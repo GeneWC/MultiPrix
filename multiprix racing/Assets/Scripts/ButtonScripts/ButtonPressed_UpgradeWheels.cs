@@ -7,7 +7,7 @@ using TMPro;
 public class ButtonPressed_UpgradeWheels : MonoBehaviour
 {
     public Button yourButton;
-    public int pricet1 = 300;
+    public int pricet1 = PlayerPrefs.GetInt("pricewheels");
     public int n = 0;
     public AudioSource AudioSource, BadAudio;
     public TMP_Text text;
@@ -20,10 +20,10 @@ public class ButtonPressed_UpgradeWheels : MonoBehaviour
         if(PlayerPrefs.GetInt("currency") >= pricet1){
             AudioSource.Play(0);
             Debug.Log("wheels upgraded!");
-            PlayerPrefs.SetFloat("acceleration", PlayerPrefs.GetFloat("acceleration") - .0003f);
+            PlayerPrefs.SetFloat("acceleration", PlayerPrefs.GetFloat("acceleration") - .0005f);
             PlayerPrefs.SetInt("currency", PlayerPrefs.GetInt("currency") - pricet1);
-            pricet1 += 100 + (100 * n);
-            n++;
+            PlayerPrefs.SetInt("pricewheels", PlayerPrefs.GetInt("pricewheels") + 100 + (150 * PlayerPrefs.GetInt("pricewheelsex")));
+            PlayerPrefs.SetInt("pricewheelsex", PlayerPrefs.GetInt("pricewheelsex") + 1);
         }
         else{
             Debug.Log("NOT ENOUGH MONEY!!!");
@@ -33,7 +33,7 @@ public class ButtonPressed_UpgradeWheels : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        pricet1 = PlayerPrefs.GetInt("pricewheels");
         if(PlayerPrefs.GetFloat("acceleration") < .002)
         {
             text.text = "MAX LEVEL";

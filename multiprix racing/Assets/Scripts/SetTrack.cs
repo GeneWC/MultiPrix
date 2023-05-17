@@ -14,7 +14,7 @@ public class SetTrack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        int track = Random.Range(0, 4);
+        int track = PlayerPrefs.GetInt("mapnumber");
         audio = GetComponent<AudioSource>();
 
         if (track == 0) // america

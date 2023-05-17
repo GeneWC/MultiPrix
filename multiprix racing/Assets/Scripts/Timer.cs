@@ -17,6 +17,7 @@ public class Timer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         text.text = "Time Remaining: " + time;
         randomNumber = Random.Range(0, 2);
         waitTime = 0;
@@ -55,8 +56,9 @@ public class Timer : MonoBehaviour
         }
         if(time == 0)
         {
-            
-            SceneManager.LoadScene("general_race");
+            PlayerPrefs.SetInt("mapnumber", PlayerPrefs.GetInt("mapnumber") + 1);
+            PlayerPrefs.SetInt("currency", PlayerPrefs.GetInt("currency"));
+            SceneManager.LoadScene("Briefing");
         }
     }
 }

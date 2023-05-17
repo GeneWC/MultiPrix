@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     float waittochangetomenu = 0f;
     bool gameLost;
     float accel;
+    float endingvelocity = 100;
     public AudioSource audio;
     private Animation anim;
     float seconds;
@@ -43,7 +44,7 @@ public class Player : MonoBehaviour
         anim = gameObject.GetComponent<Animation>();
        accel = PlayerPrefs.GetFloat("acceleration");
        maxSpeed = PlayerPrefs.GetFloat("maxSpeed");
-       velocity = maxSpeed/3;
+       velocity = maxSpeed;
         Debug.Log("Skin: " + PlayerPrefs.GetInt("carSkin"));
         spriteRenderer.sprite = spriteArray[PlayerPrefs.GetInt("carSkin")];
         spriteRenderer.drawMode = SpriteDrawMode.Sliced;
@@ -54,20 +55,22 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(addseconds > 480)
+        
+        Debug.Log(gameLost);
+        if(addseconds > 360)
         {
             seconds++;
             addseconds = 0;
-            Debug.Log(seconds);
+            
         }
         else
         {
             addseconds++;
         }
-        if (velocity < 1)
+        if (velocity < 1 && !endGame && !endGameAlreadyRan)
         {
-            gameLost = true;
             endGame = true;
+            endingvelocity = 0;
 
         }
         else if (velocity <= 5)
@@ -93,22 +96,11 @@ public class Player : MonoBehaviour
             }
             if (endGame)
             {
-                
-                if (velocity > 0)
-                {
-                    velocity = 0;
-                    audio.Play(0);
+                if(endingvelocity < 1){
+                    gameLost = true;
                 }
-                else
-                {
-                    velocity = 0;
-                    
-                }
-                
-                if (raceEnd)
-                {
-                    endGame = false;
-                    raceEnd = false;
+                else{
+                    gameLost = false;
                 }
                 if (gameLost)
                 {
@@ -124,6 +116,27 @@ public class Player : MonoBehaviour
                     doneplaying = true;
                     calculatePoints();
                 }
+                
+                if (velocity > 0)
+                {
+                    velocity = 0;
+                    if(gameLost){}
+                    else{
+                    audio.Play(0);
+                    }
+                }
+                else
+                {
+                    velocity = 0;
+                    
+                }
+                
+                if (raceEnd)
+                {
+                    endGame = false;
+                    raceEnd = false;
+                }
+                
                     
                 
                    
@@ -138,6 +151,7 @@ public class Player : MonoBehaviour
         if (transform.position.x > 920 && !endGameAlreadyRan)
         {
             accel = .1f;
+            endingvelocity = 100;
             endGame = true;
             endGameAlreadyRan = true;
             raceEnd = true;
@@ -149,12 +163,12 @@ public class Player : MonoBehaviour
             {
                 if (gameLost == false)
                 {
-                    if (PlayerPrefs.GetInt("phase") == 0)
+                    if (PlayerPrefs.GetInt("mapnumber") <= 2)
                     {
 
                         SceneManager.LoadScene("Upgrades");
                     }
-                    if (PlayerPrefs.GetInt("phase") == 1)
+                    if (PlayerPrefs.GetInt("mapnumber") == 3)
                     {
 
                         SceneManager.LoadScene("Game End");
@@ -256,9 +270,9 @@ public class Player : MonoBehaviour
         }
 
         // output num of points
-        scoreText.text = ("Points earned: " + points);
+        scoreText.text = ("Points earned: " + points + " x " + (PlayerPrefs.GetInt("mapnumber") + 1) + "Marathon Bonus!");
         Debug.Log(points);
-        PlayerPrefs.SetInt("currency", points);
+        PlayerPrefs.SetInt("currency", PlayerPrefs.GetInt("currency") + (points * (PlayerPrefs.GetInt("mapnumber") + 1)));
     }
     public void ChangeSprite(){
             spriteRenderer.sprite = spriteArray[PlayerPrefs.GetInt("CarSkin")];
