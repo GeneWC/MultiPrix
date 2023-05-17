@@ -20,7 +20,7 @@ public class ButtonPressed_UpgradeChassis : MonoBehaviour
         if(PlayerPrefs.GetInt("currency") >= pricet1){
             AudioSource.Play(0);
             Debug.Log("chassis upgraded!");
-            PlayerPrefs.SetFloat("maxSpeed", PlayerPrefs.GetFloat("maxSpeed") + 5);
+            PlayerPrefs.SetFloat("maxSpeed", PlayerPrefs.GetFloat("maxSpeed") + 4);
             PlayerPrefs.SetInt("currency", PlayerPrefs.GetInt("currency") - pricet1);
             pricet1 += 100 + (50 * n);
             n++;
@@ -37,6 +37,15 @@ public class ButtonPressed_UpgradeChassis : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        text.text = ("Purchase: " + pricet1);
+        if (PlayerPrefs.GetFloat("maxSpeed") > 50)
+        {
+            text.text = "MAX LEVEL";
+            pricet1 = 999999999;
+        }
+        else
+        {
+            text.text = ("Purchase: " + pricet1);
+        }
+
     }
 }

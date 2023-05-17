@@ -20,7 +20,7 @@ public class ButtonPressed_UpgradeWheels : MonoBehaviour
         if(PlayerPrefs.GetInt("currency") >= pricet1){
             AudioSource.Play(0);
             Debug.Log("wheels upgraded!");
-            PlayerPrefs.SetFloat("acceleration", PlayerPrefs.GetFloat("acceleration") - .0006f);
+            PlayerPrefs.SetFloat("acceleration", PlayerPrefs.GetFloat("acceleration") - .0003f);
             PlayerPrefs.SetInt("currency", PlayerPrefs.GetInt("currency") - pricet1);
             pricet1 += 100 + (100 * n);
             n++;
@@ -33,6 +33,15 @@ public class ButtonPressed_UpgradeWheels : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        text.text = ("Purchase: " + pricet1);
+        
+        if(PlayerPrefs.GetFloat("acceleration") < .002)
+        {
+            text.text = "MAX LEVEL";
+                pricet1 = 999999999;
+        }
+        else
+        {
+            text.text = ("Purchase: " + pricet1);
+        }
     }
 }

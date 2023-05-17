@@ -9,11 +9,13 @@ using Random = UnityEngine.Random;
 
 public class Player : MonoBehaviour
 {
-    
+    float waittochangetomenu = 0f;
+    bool gameLost;
     float accel;
     public AudioSource audio;
     private Animation anim;
-    float deccelrate = .1f;
+    float seconds;
+    float addseconds;
     float maxSpeed;
     float velocity;
     int delayStart = 0;
@@ -35,10 +37,13 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameLost = false;
+        addseconds = 0f;
+        seconds = 0f;
         anim = gameObject.GetComponent<Animation>();
        accel = PlayerPrefs.GetFloat("acceleration");
        maxSpeed = PlayerPrefs.GetFloat("maxSpeed");
-       velocity = maxSpeed;
+       velocity = maxSpeed/3;
         Debug.Log("Skin: " + PlayerPrefs.GetInt("carSkin"));
         spriteRenderer.sprite = spriteArray[PlayerPrefs.GetInt("carSkin")];
         spriteRenderer.drawMode = SpriteDrawMode.Sliced;
@@ -49,19 +54,40 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(addseconds > 480)
+        {
+            seconds++;
+            addseconds = 0;
+            Debug.Log(seconds);
+        }
+        else
+        {
+            addseconds++;
+        }
+        if (velocity < 1)
+        {
+            gameLost = true;
+            endGame = true;
 
-        if (velocity < maxSpeed - 1)
+        }
+        else if (velocity <= 5)
+        {
+            text.text = "" + (int)velocity * 3.2 + " mph" + ": HURRY UP!!!";
+        }
+        else if (velocity < maxSpeed - 1)
         {
             text.text = "" + (int)velocity * 3.2 + " mph";
             
         }
-        else{
+        
+        else
+            {
             text.text = "" + (int)velocity * 3.2 + " mph" + "\n" + "(MAX SPEED!)";
         }
         if (delayStart > 180)
         {
             transform.position += new Vector3((velocity) * Time.deltaTime, 0, 0);
-            if (velocity > 12 && !endGame)
+            if (velocity > 0 && !endGame)
             {
                 velocity -= accel;
             }
@@ -76,7 +102,7 @@ public class Player : MonoBehaviour
                 else
                 {
                     velocity = 0;
-                    deccelrate = 0;
+                    
                 }
                 
                 if (raceEnd)
@@ -84,11 +110,20 @@ public class Player : MonoBehaviour
                     endGame = false;
                     raceEnd = false;
                 }
-                questionsText.text = "Questions Answered: " + questionsAnsweredRight + "/" + (questionsAnsweredRight + questionsAnsweredWrong);
-                placementText.text = "You placed" + "1st!";
-                Debug.Log("Percent Accuracy: " + ( 100 * (double)questionsAnsweredRight) / (questionsAnsweredRight + questionsAnsweredWrong));
-                doneplaying = true;
-                calculatePoints();
+                if (gameLost)
+                {
+                    velocity = 0;
+                    questionsText.text = "GAME OVER";
+                    doneplaying = true;
+                }
+                else
+                {
+                    questionsText.text = "Questions Answered: " + questionsAnsweredRight + "/" + (questionsAnsweredRight + questionsAnsweredWrong);
+                    placementText.text = "Time: " + seconds + " Seconds!";
+                    Debug.Log("Percent Accuracy: " + (100 * (double)questionsAnsweredRight) / (questionsAnsweredRight + questionsAnsweredWrong));
+                    doneplaying = true;
+                    calculatePoints();
+                }
                     
                 
                    
@@ -112,13 +147,22 @@ public class Player : MonoBehaviour
         {
             if (delayChange > 1440)
             {
-                if(PlayerPrefs.GetInt("phase") == 0){
-                    
-                SceneManager.LoadScene("Upgrades");
+                if (gameLost == false)
+                {
+                    if (PlayerPrefs.GetInt("phase") == 0)
+                    {
+
+                        SceneManager.LoadScene("Upgrades");
+                    }
+                    if (PlayerPrefs.GetInt("phase") == 1)
+                    {
+
+                        SceneManager.LoadScene("Game End");
+                    }
                 }
-                if(PlayerPrefs.GetInt("phase") == 1){
-                    
-                SceneManager.LoadScene("Game End");
+                else
+                {
+                    SceneManager.LoadScene("Game End");
                 }
             }
             else
