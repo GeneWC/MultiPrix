@@ -6,8 +6,11 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
+using Unity.Netcode;
+using Cinemachine;
 
 public class Player : MonoBehaviour
+public class Player : NetworkBehaviour
 {
 
     float accel;
@@ -27,13 +30,47 @@ public class Player : MonoBehaviour
     CarType car;
     
     public TMP_Text text, scoreText, questionsText, placementText;
+
+    //keeping track of networking players
+    public static int playerCounter = 1;
+    public int m_player = 1;
+    public NetworkVariable<bool> started = new NetworkVariable<bool>(false);
   
     // Start is called before the first frame update
     void Start()
+    /*void Start()
     {
        accel = PlayerPrefs.GetFloat("acceleration");
        maxSpeed = PlayerPrefs.GetFloat("maxSpeed");
+<<<<<<< Updated upstream
        velocity = maxSpeed;
+=======
+       velocity = maxSpeed/3;
+        Debug.Log("Skin: " + PlayerPrefs.GetInt("carSkin"));
+        spriteRenderer.sprite = spriteArray[PlayerPrefs.GetInt("carSkin")];
+        spriteRenderer.drawMode = SpriteDrawMode.Sliced;
+        spriteRenderer.size = new Vector2(2f, 2f);
+
+    } */
+
+    public override void OnNetworkSpawn()
+    {
+        accel = PlayerPrefs.GetFloat("acceleration");
+        maxSpeed = PlayerPrefs.GetFloat("maxSpeed");
+        velocity = maxSpeed / 3;
+        m_player = playerCounter++;
+        transform.position = new Vector3(-7.63f, (4.5f - (m_player * 1.5f)), 0);
+        if (!IsOwner) { return; }
+        if (IsServer) { return; }
+        GameObject followPlayerCameraObject = GameObject.Find("CM vcam1");
+        CinemachineVirtualCamera followPlayerCamera = followPlayerCameraObject.GetComponent<CinemachineVirtualCamera>();
+        followPlayerCamera.Follow = transform;
+        var transposer = followPlayerCamera.GetCinemachineComponent<CinemachineTransposer>();
+        transposer.m_FollowOffset = new Vector3(7.63f, (-2.8f + (m_player - 1) * 1.5f), -10.6f);
+        GameObject inputFieldObject = GameObject.Find("UI_InputWindow");
+        inputFieldObject.GetComponent<UI_InputWindow>().player = this;
+
+>>>>>>> Stashed changes
     }
 
     // Update is called once per frame
