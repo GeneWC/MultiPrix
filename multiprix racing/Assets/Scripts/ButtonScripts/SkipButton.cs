@@ -17,7 +17,8 @@ public class SkipButton : MonoBehaviour
     void TaskOnClick(){
          //AudioSource.Play(0);
         PlayerPrefs.SetInt("mapnumber", PlayerPrefs.GetInt("mapnumber") + 1);
-        PlayerPrefs.SetFloat("destroyrate", (float)(PlayerPrefs.GetInt("destroyrate") + .003));
+        PlayerPrefs.SetFloat("destroyrate", (float)(PlayerPrefs.GetInt("destroyrate") + .01));
+        PlayerPrefs.SetFloat("difficultymult", PlayerPrefs.GetFloat("difficultymult") + 2);
         SceneManager.LoadScene("Briefing");
 
        

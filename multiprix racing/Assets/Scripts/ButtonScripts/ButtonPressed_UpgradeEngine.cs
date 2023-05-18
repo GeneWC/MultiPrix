@@ -22,7 +22,7 @@ public class ButtonPressed_UpgradeEngine : MonoBehaviour
         {
             AudioSource.Play(0);
             Debug.Log("engine upgraded!");
-            PlayerPrefs.SetFloat("speedincrease", PlayerPrefs.GetFloat("speedincrease") + 5);
+            PlayerPrefs.SetFloat("speedincrease", PlayerPrefs.GetFloat("speedincrease") + 2);
             PlayerPrefs.SetInt("currency", PlayerPrefs.GetInt("currency") - pricet1);
             PlayerPrefs.SetInt("priceengine", PlayerPrefs.GetInt("priceengine") + 100 + (350 * PlayerPrefs.GetInt("priceengineex")));
             PlayerPrefs.SetInt("priceengineex", PlayerPrefs.GetInt("priceengineex") + 1);
@@ -37,7 +37,7 @@ public class ButtonPressed_UpgradeEngine : MonoBehaviour
     void Update()
     {
         pricet1 = PlayerPrefs.GetInt("priceengine");
-        if (PlayerPrefs.GetFloat("speedincrease") > 40)
+        if (PlayerPrefs.GetFloat("speedincrease") > 20)
         {
             text.text = "MAX LEVEL";
             pricet1 = 99999999;

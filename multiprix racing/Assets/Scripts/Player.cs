@@ -17,9 +17,11 @@ public class Player : MonoBehaviour
     public AudioSource audio;
     private Animation anim;
     float seconds;
+    float difficulty;
     float addseconds;
     float maxSpeed;
     float velocity;
+    double fixeddestroyrate;
     int delayStart = 0;
     int delayChange = 0;
     bool doneplaying = false;
@@ -39,12 +41,14 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+      
+        fixeddestroyrate = fixeddestroyrate + .1;
         gameLost = false;
         addseconds = 0f;
         seconds = 0f;
         anim = gameObject.GetComponent<Animation>();
        accel = PlayerPrefs.GetFloat("acceleration");
-        destroyrate = PlayerPrefs.GetFloat("destroyrate");
+       
        maxSpeed = PlayerPrefs.GetFloat("maxSpeed");
        velocity = maxSpeed/3;
         Debug.Log("Skin: " + PlayerPrefs.GetInt("carSkin"));
@@ -57,6 +61,8 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        difficulty = PlayerPrefs.GetFloat("difficultymult");
+        destroyrate = PlayerPrefs.GetFloat("destroyrate");
         Debug.Log("Balls");
         Debug.Log(gameLost);
         if(addseconds > 360)
@@ -95,7 +101,7 @@ public class Player : MonoBehaviour
             if (velocity > 0 && !endGame)
             {
                 if(PlayerPrefs.GetInt("IsPaused") == 0){
-                velocity -= (accel + destroyrate);
+                velocity -= (accel * difficulty);
                 }
                 else{
                     
@@ -277,7 +283,7 @@ public class Player : MonoBehaviour
         }
 
         // output num of points
-        scoreText.text = ("Points earned: " + points + " x " + (PlayerPrefs.GetInt("mapnumber") + 1) + "Marathon Bonus!");
+        scoreText.text = ("Points earned: " + points + " x " + (PlayerPrefs.GetInt("mapnumber") + 1) + " Marathon Bonus!");
         Debug.Log(points);
         PlayerPrefs.SetInt("currency", PlayerPrefs.GetInt("currency") + (points * (PlayerPrefs.GetInt("mapnumber") + 1)));
     }
