@@ -46,8 +46,9 @@ public class AssignCarType : MonoBehaviour
         {
             PlayerPrefs.SetInt("carSkin", 5);
         } 
-        Destroy(GameObject.Find("Main Title Track"));
-        SceneManager.LoadScene(mapName);
+        //MOVED TO ToRace
+        /* Destroy(GameObject.Find("Main Title Track"));
+        SceneManager.LoadScene(mapName); */
         
         Debug.Log(PlayerPrefs.GetInt("carSkin"));
 
