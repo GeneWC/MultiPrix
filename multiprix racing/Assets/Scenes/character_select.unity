@@ -272,6 +272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   yourButton: {fileID: 8457415}
+  myPrefab: {fileID: 8234348405221801075, guid: d9c5fe16833fc0243ada80aca9c242ed, type: 3}
 --- !u!95 &8457419
 Animator:
   serializedVersion: 4
@@ -809,6 +810,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   yourButton: {fileID: 276756230}
+  myPrefab: {fileID: 8234348405221801075, guid: d9c5fe16833fc0243ada80aca9c242ed, type: 3}
 --- !u!95 &276756234
 Animator:
   serializedVersion: 4
@@ -1062,6 +1064,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   yourButton: {fileID: 373455302}
+  myPrefab: {fileID: 8234348405221801075, guid: d9c5fe16833fc0243ada80aca9c242ed, type: 3}
 --- !u!95 &373455306
 Animator:
   serializedVersion: 4
@@ -1399,6 +1402,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   yourButton: {fileID: 489075491}
+  myPrefab: {fileID: 8234348405221801075, guid: d9c5fe16833fc0243ada80aca9c242ed, type: 3}
 --- !u!95 &489075495
 Animator:
   serializedVersion: 4
@@ -1599,6 +1603,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   yourButton: {fileID: 576140719}
+  myPrefab: {fileID: 8234348405221801075, guid: d9c5fe16833fc0243ada80aca9c242ed, type: 3}
 --- !u!95 &576140723
 Animator:
   serializedVersion: 4
@@ -3321,6 +3326,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   yourButton: {fileID: 1959219308}
+  myPrefab: {fileID: 8234348405221801075, guid: d9c5fe16833fc0243ada80aca9c242ed, type: 3}
 --- !u!95 &1959219312
 Animator:
   serializedVersion: 4

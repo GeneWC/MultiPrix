@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
+using Unity.Netcode;
 public class AssignCarType : MonoBehaviour
 {
     public Button yourButton;
     int randomNumber;
     string mapName = "general_race";
-
+    static bool isNetworkGame = false;
+    [SerializeField] private GameObject myPrefab;
     private void Start()
     {
         
@@ -47,7 +48,7 @@ public class AssignCarType : MonoBehaviour
         } 
         Destroy(GameObject.Find("Main Title Track"));
         SceneManager.LoadScene(mapName);
-
+        
         Debug.Log(PlayerPrefs.GetInt("carSkin"));
 
     }

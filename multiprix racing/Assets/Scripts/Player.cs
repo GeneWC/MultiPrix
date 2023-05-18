@@ -6,8 +6,9 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
-
-public class Player : MonoBehaviour
+using Unity.Netcode;
+using Cinemachine;
+public class Player : NetworkBehaviour
 {
     float waittochangetomenu = 0f;
     bool gameLost;
@@ -16,8 +17,8 @@ public class Player : MonoBehaviour
     private Animation anim;
     float seconds;
     float addseconds;
-    float maxSpeed;
-    float velocity;
+    public float maxSpeed;
+    public float velocity;
     int delayStart = 0;
     int delayChange = 0;
     bool doneplaying = false;
@@ -33,9 +34,14 @@ public class Player : MonoBehaviour
     [SerializeField] public Sprite[] spriteArray = new Sprite[6];
     
     public TMP_Text text, scoreText, questionsText, placementText;
-  
+
+    //network varibles
+    public static int playerCounter = 1;
+    public int m_player = 1;
+    public NetworkVariable<bool> started = new NetworkVariable<bool>(false);
+
     // Start is called before the first frame update
-    void Start()
+    /* void Start()
     {
         gameLost = false;
         addseconds = 0f;
@@ -49,42 +55,44 @@ public class Player : MonoBehaviour
         spriteRenderer.drawMode = SpriteDrawMode.Sliced;
         spriteRenderer.size = new Vector2(2f, 2f);
 
+    } */
+    public override void OnDestroy() {
+        base.OnDestroy();
     }
+    public override void OnNetworkSpawn() {
+        base.OnNetworkSpawn();
+        accel = PlayerPrefs.GetFloat("acceleration");
+        maxSpeed = PlayerPrefs.GetFloat("maxSpeed");
+        velocity = maxSpeed;
+        m_player = playerCounter++;
+        
+        if (!IsOwner) { return; }
+        if (IsServer) { return; }
+        /* GameObject followPlayerCameraObject = GameObject.Find("CM vcam1");
+        CinemachineVirtualCamera followPlayerCamera = followPlayerCameraObject.GetComponent<CinemachineVirtualCamera>();
+        followPlayerCamera.Follow = transform;
+        var transposer = followPlayerCamera.GetCinemachineComponent<CinemachineTransposer>();
+        transposer.m_FollowOffset = new Vector3(7.63f, (-2.8f + (m_player - 1) * 1.5f), -10.6f);
+        GameObject inputFieldObject = GameObject.Find("UI_InputWindow");
+        inputFieldObject.GetComponent<UI_InputWindow>().player = this; */
 
+    }
+    void Initalize() {
+        transform.position = new Vector3(-7.63f, (4.5f - (m_player * 1.5f)), 0);
+        GameObject followPlayerCameraObject = GameObject.Find("CM vcam1");
+        CinemachineVirtualCamera followPlayerCamera = followPlayerCameraObject.GetComponent<CinemachineVirtualCamera>();
+        followPlayerCamera.Follow = transform;
+        var transposer = followPlayerCamera.GetCinemachineComponent<CinemachineTransposer>();
+        transposer.m_FollowOffset = new Vector3(7.63f, (-2.8f + (m_player - 1) * 1.5f), -10.6f);
+        GameObject inputFieldObject = GameObject.Find("UI_InputWindow");
+        inputFieldObject.GetComponent<UI_InputWindow>().player = this;
+    }
     // Update is called once per frame
     void Update()
     {
-        if(addseconds > 480)
-        {
-            seconds++;
-            addseconds = 0;
-            Debug.Log(seconds);
-        }
-        else
-        {
-            addseconds++;
-        }
-        if (velocity < 1)
-        {
-            gameLost = true;
-            endGame = true;
-
-        }
-        else if (velocity <= 5)
-        {
-            text.text = "" + (int)velocity * 3.2 + " mph" + ": HURRY UP!!!";
-        }
-        else if (velocity < maxSpeed - 1)
-        {
-            text.text = "" + (int)velocity * 3.2 + " mph";
-            
-        }
+     
         
-        else
-            {
-            text.text = "" + (int)velocity * 3.2 + " mph" + "\n" + "(MAX SPEED!)";
-        }
-        if (delayStart > 180)
+        if (started.Value)
         {
             transform.position += new Vector3((velocity) * Time.deltaTime, 0, 0);
             if (velocity > 0 && !endGame)
@@ -129,11 +137,6 @@ public class Player : MonoBehaviour
                    
                 }
             }
-        
-        else
-        {
-            delayStart++;
-        }
 
         if (transform.position.x > 920 && !endGameAlreadyRan)
         {
