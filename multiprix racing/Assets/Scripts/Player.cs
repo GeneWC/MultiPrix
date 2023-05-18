@@ -9,9 +9,10 @@ using Random = UnityEngine.Random;
 
 public class Player : MonoBehaviour
 {
-    float waittochangetomenu = 0f;
+   
     bool gameLost;
     float accel;
+    float destroyrate;
     float endingvelocity = 100;
     public AudioSource audio;
     private Animation anim;
@@ -43,8 +44,9 @@ public class Player : MonoBehaviour
         seconds = 0f;
         anim = gameObject.GetComponent<Animation>();
        accel = PlayerPrefs.GetFloat("acceleration");
+        destroyrate = PlayerPrefs.GetFloat("destroyrate");
        maxSpeed = PlayerPrefs.GetFloat("maxSpeed");
-       velocity = maxSpeed;
+       velocity = maxSpeed/3;
         Debug.Log("Skin: " + PlayerPrefs.GetInt("carSkin"));
         spriteRenderer.sprite = spriteArray[PlayerPrefs.GetInt("carSkin")];
         spriteRenderer.drawMode = SpriteDrawMode.Sliced;
@@ -93,7 +95,7 @@ public class Player : MonoBehaviour
             if (velocity > 0 && !endGame)
             {
                 if(PlayerPrefs.GetInt("IsPaused") == 0){
-                velocity -= accel;
+                velocity -= (accel + destroyrate);
                 }
                 else{
                     

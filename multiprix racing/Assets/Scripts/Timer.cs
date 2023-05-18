@@ -57,6 +57,7 @@ public class Timer : MonoBehaviour
         if(time == 0)
         {
             PlayerPrefs.SetInt("mapnumber", PlayerPrefs.GetInt("mapnumber") + 1);
+            PlayerPrefs.SetFloat("destroyrate", (float)(PlayerPrefs.GetInt("destroyrate") + .003));
             PlayerPrefs.SetInt("currency", PlayerPrefs.GetInt("currency"));
             SceneManager.LoadScene("Briefing");
         }

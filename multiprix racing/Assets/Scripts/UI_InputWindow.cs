@@ -9,7 +9,7 @@ using TMPro;
 public class UI_InputWindow : MonoBehaviour
 {
     private string input;
-    
+    public float increase;
     private TMP_InputField inputField;
     public TextMeshProUGUI question;
     private int answer = 1;
@@ -18,6 +18,7 @@ public class UI_InputWindow : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         // read in question from the text field containing the question, and split it to be the numbers, and find the answer of the question.
         question = transform.Find("Question").GetComponent<TextMeshProUGUI>();
         inputField = transform.Find("InputField (TMP)").GetComponent<TMP_InputField>();
@@ -54,11 +55,15 @@ public class UI_InputWindow : MonoBehaviour
 
         if (Int32.Parse(input) == answer)
         {
+            Debug.Log(increase);
+            increase = PlayerPrefs.GetFloat("speedincrease");
+             player.GetComponent<Player>().setVelocity(increase);
+            StartCoroutine(correctQuestion());
             Debug.Log("Correct!");
             GenerateNewQuestion();
             player.GetComponent<Player>().setQuestionsAnswered(true);
-             StartCoroutine(correctQuestion());
-             player.GetComponent<Player>().setVelocity(PlayerPrefs.GetFloat("increase")/10f);
+             
+             
         }
         else
         {

@@ -3427,7 +3427,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Decreases Deceleration By 20%
+  m_text: Decreases Deceleration By 10%
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0dd213c0b015a7742a64995cad9b44c1, type: 2}
   m_sharedMaterial: {fileID: -683005101049323391, guid: 0dd213c0b015a7742a64995cad9b44c1, type: 2}

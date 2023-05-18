@@ -8,8 +8,9 @@ public class VariableInitializer : MonoBehaviour
     void Start()
     {
         PlayerPrefs.SetInt("currency", 0);
-        PlayerPrefs.SetFloat("acceleration", .006f);
-        
+        PlayerPrefs.SetFloat("acceleration", .003f);
+        PlayerPrefs.SetFloat("destroyrate", 0f);
+        PlayerPrefs.SetFloat("speedincrease", 10);
         PlayerPrefs.SetFloat("maxSpeed", 31f);
         PlayerPrefs.SetInt("carSkin", 1); // i did car skins by numbers, check enum class in player.cs
         Debug.Log(PlayerPrefs.GetInt("phase"));

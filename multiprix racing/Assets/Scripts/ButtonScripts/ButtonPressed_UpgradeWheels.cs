@@ -20,7 +20,7 @@ public class ButtonPressed_UpgradeWheels : MonoBehaviour
         if(PlayerPrefs.GetInt("currency") >= pricet1){
             AudioSource.Play(0);
             Debug.Log("wheels upgraded!");
-            PlayerPrefs.SetFloat("acceleration", PlayerPrefs.GetFloat("acceleration") - .0005f);
+            PlayerPrefs.SetFloat("acceleration", (float)(PlayerPrefs.GetFloat("acceleration") * .90));
             PlayerPrefs.SetInt("currency", PlayerPrefs.GetInt("currency") - pricet1);
             PlayerPrefs.SetInt("pricewheels", PlayerPrefs.GetInt("pricewheels") + 100 + (150 * PlayerPrefs.GetInt("pricewheelsex")));
             PlayerPrefs.SetInt("pricewheelsex", PlayerPrefs.GetInt("pricewheelsex") + 1);
