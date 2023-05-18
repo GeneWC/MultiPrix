@@ -21,6 +21,7 @@ public class VariableInitializer : MonoBehaviour
         PlayerPrefs.SetInt("pricewheelsex", 0);
         PlayerPrefs.SetInt("priceengineex", 0);
         PlayerPrefs.SetInt("pricechassisex", 0);
+        PlayerPrefs.SetInt("IsPaused", 0);
     }
 
     // Update is called once per frame

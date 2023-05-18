@@ -55,7 +55,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Debug.Log("Balls");
         Debug.Log(gameLost);
         if(addseconds > 360)
         {
@@ -92,7 +92,12 @@ public class Player : MonoBehaviour
             transform.position += new Vector3((velocity) * Time.deltaTime, 0, 0);
             if (velocity > 0 && !endGame)
             {
+                if(PlayerPrefs.GetInt("IsPaused") == 0){
                 velocity -= accel;
+                }
+                else{
+                    
+                }
             }
             if (endGame)
             {
