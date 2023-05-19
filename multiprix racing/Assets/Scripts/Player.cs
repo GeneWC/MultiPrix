@@ -82,7 +82,7 @@ public class Player : MonoBehaviour
             {
             text.text = "" + (int)velocity * 3.2 + " mph" + "\n" + "(MAX SPEED!)";
         }
-        if (delayStart > 180)
+        if (delayStart > 150)
         {
             if (velocity < 0) velocity = 0;
             inputField.ActivateInputField();

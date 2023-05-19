@@ -45,7 +45,7 @@ public class UI_InputWindow : MonoBehaviour
             inputField.DeactivateInputField();
         }
 
-        if (pause.GetComponent<PauseMenu>().isPaused)
+        if (pause.GetComponent<PauseMenu>().isPaused || player.transform.position.x > 915)
         {
             inputField.text = "";
         }
@@ -61,6 +61,7 @@ public class UI_InputWindow : MonoBehaviour
         if (player.transform.position.x > 915)
         {
             inputField.DeactivateInputField();
+
         }
         else
         {
