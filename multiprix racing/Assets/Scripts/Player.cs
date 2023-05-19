@@ -138,7 +138,7 @@ public class Player : NetworkBehaviour
             }
         }
 
-        if (transform.position.x > 100 && !endGameAlreadyRan) {
+        if (transform.position.x > 920 && !endGameAlreadyRan) {
             calculatePoints();
             timeTaken.Value = (System.DateTime.Now.Ticks - timeTaken.Value) / TimeSpan.TicksPerSecond;
             accel = .1f;
