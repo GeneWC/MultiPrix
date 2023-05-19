@@ -77,7 +77,6 @@ public class Player : NetworkBehaviour
         accel = PlayerPrefs.GetFloat("acceleration");
         maxSpeed = PlayerPrefs.GetFloat("maxSpeed");
         velocity = maxSpeed;
-        started.Value = false;
         raceEnd = false;
         endGameAlreadyRan = false;
         timeTaken.Value = 0;

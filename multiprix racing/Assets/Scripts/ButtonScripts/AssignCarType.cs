@@ -7,7 +7,7 @@ using Unity.Netcode;
 public class AssignCarType : MonoBehaviour
 {
     public Button yourButton;
-    static bool isNetworkGame = false;
+    
     [SerializeField] private GameObject myPrefab;
     private void Start()
     {

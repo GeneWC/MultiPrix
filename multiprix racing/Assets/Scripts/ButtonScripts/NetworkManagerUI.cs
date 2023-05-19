@@ -48,6 +48,11 @@ public class NetworkManagerUI : MonoBehaviour {
             GameObject nextRace = Instantiate(nextRaceButton, new Vector3(275, 950, 0), Quaternion.identity);
             GameObject characterScreen = GameObject.Find("ScreenUpgrades");
             nextRace.transform.parent = characterScreen.transform;
+
+            foreach (var no in NetworkManager.Singleton.ConnectedClients) {
+                Player p = no.Value.PlayerObject.GetComponent<Player>();
+                p.started.Value = false;
+            }
         }
     }
 
