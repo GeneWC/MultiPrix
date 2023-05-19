@@ -11,9 +11,8 @@ using Cinemachine;
 public class Player : NetworkBehaviour
 {
     float waittochangetomenu = 0f;
-    bool gameLost;
+    //bool gameLost;
     float accel;
-    public AudioSource audio;
     private Animation anim;
     float seconds;
     float addseconds;
@@ -22,23 +21,29 @@ public class Player : NetworkBehaviour
     int delayStart = 0;
     int delayChange = 0;
     bool doneplaying = false;
+
+    internal void reset() {
+        timeTaken.Value = 0;
+        started.Value = false;
+    }
+
     bool endGame = false;
-    bool raceEnd = false;
+    public bool raceEnd = false;
     bool endGameAlreadyRan = false;
     // points and stuff
-    int questionsAnsweredRight = 0;
-    int questionsAnsweredWrong = 0;
-    int points = 0;
+    public int questionsAnsweredRight = 0;
+    public int questionsAnsweredWrong = 0;
+    public int points = 0;
     CarType car;
     public SpriteRenderer spriteRenderer;
     [SerializeField] public Sprite[] spriteArray = new Sprite[6];
     
-    public TMP_Text text, scoreText, questionsText, placementText;
 
     //network varibles
     public static int playerCounter = 1;
     public int m_player = 1;
     public NetworkVariable<bool> started = new NetworkVariable<bool>(false);
+    public NetworkVariable<long> timeTaken = new NetworkVariable<long>(0, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner );
 
     // Start is called before the first frame update
     /* void Start()
@@ -61,96 +66,93 @@ public class Player : NetworkBehaviour
     }
     public override void OnNetworkSpawn() {
         base.OnNetworkSpawn();
+        transform.position = new Vector3(-1000,-1000,0);
         accel = PlayerPrefs.GetFloat("acceleration");
         maxSpeed = PlayerPrefs.GetFloat("maxSpeed");
         velocity = maxSpeed;
         m_player = playerCounter++;
-        
-        if (!IsOwner) { return; }
-        if (IsServer) { return; }
-        /* GameObject followPlayerCameraObject = GameObject.Find("CM vcam1");
-        CinemachineVirtualCamera followPlayerCamera = followPlayerCameraObject.GetComponent<CinemachineVirtualCamera>();
-        followPlayerCamera.Follow = transform;
-        var transposer = followPlayerCamera.GetCinemachineComponent<CinemachineTransposer>();
-        transposer.m_FollowOffset = new Vector3(7.63f, (-2.8f + (m_player - 1) * 1.5f), -10.6f);
-        GameObject inputFieldObject = GameObject.Find("UI_InputWindow");
-        inputFieldObject.GetComponent<UI_InputWindow>().player = this; */
-
     }
-    void Initalize() {
-        transform.position = new Vector3(-7.63f, (4.5f - (m_player * 1.5f)), 0);
+    public void Initalize() {
+        if(!IsOwner) { return; }
+        accel = PlayerPrefs.GetFloat("acceleration");
+        maxSpeed = PlayerPrefs.GetFloat("maxSpeed");
+        velocity = maxSpeed;
+        started.Value = false;
+        raceEnd = false;
+        endGameAlreadyRan = false;
+        timeTaken.Value = 0;
+        transform.position = new Vector3(0f, ((m_player * -1.2f)), 0);
         GameObject followPlayerCameraObject = GameObject.Find("CM vcam1");
         CinemachineVirtualCamera followPlayerCamera = followPlayerCameraObject.GetComponent<CinemachineVirtualCamera>();
         followPlayerCamera.Follow = transform;
         var transposer = followPlayerCamera.GetCinemachineComponent<CinemachineTransposer>();
-        transposer.m_FollowOffset = new Vector3(7.63f, (-2.8f + (m_player - 1) * 1.5f), -10.6f);
+        transposer.m_FollowOffset = new Vector3(7.16f, (-2.3f + (m_player - 1) * 1.2f), -10.6f);
         GameObject inputFieldObject = GameObject.Find("UI_InputWindow");
         inputFieldObject.GetComponent<UI_InputWindow>().player = this;
+        GameObject postRaceCanvas = GameObject.Find("PostRaceCanvas");
+        postRaceCanvas.GetComponent<PostRaceCanvas>().player = this;
     }
     // Update is called once per frame
-    void Update()
-    {
-     
-        
-        if (started.Value)
-        {
+    void Update() {
+
+        if(!IsOwner) { return; }
+        if (started.Value) {
+            if (timeTaken.Value == 0) {
+                timeTaken.Value = System.DateTime.Now.Ticks;
+            }
             transform.position += new Vector3((velocity) * Time.deltaTime, 0, 0);
-            if (velocity > 0 && !endGame)
-            {
+            if (velocity > 0 && !endGame) {
                 velocity -= accel;
             }
-            if (endGame)
-            {
-                
-                if (velocity > 0)
-                {
+            if (endGame) {
+
+                if (velocity > 0) {
                     velocity = 0;
-                    audio.Play(0);
+                    GetComponent<AudioSource>().Play(0);
+                } else {
+                    velocity = 0;
+
                 }
-                else
-                {
-                    velocity = 0;
+
+                if (raceEnd) {                   
                     
-                }
-                
-                if (raceEnd)
-                {
                     endGame = false;
-                    raceEnd = false;
+                  
                 }
-                if (gameLost)
+                /*if (gameLost)
                 {
                     velocity = 0;
                     questionsText.text = "GAME OVER";
                     doneplaying = true;
-                }
-                else
+                }*/
+                /*else
                 {
                     questionsText.text = "Questions Answered: " + questionsAnsweredRight + "/" + (questionsAnsweredRight + questionsAnsweredWrong);
                     placementText.text = "Time: " + seconds + " Seconds!";
                     Debug.Log("Percent Accuracy: " + (100 * (double)questionsAnsweredRight) / (questionsAnsweredRight + questionsAnsweredWrong));
                     doneplaying = true;
                     calculatePoints();
-                }
-                    
-                
-                   
-                }
-            }
+                }*/
 
-        if (transform.position.x > 920 && !endGameAlreadyRan)
-        {
+
+
+            }
+        }
+
+        if (transform.position.x > 100 && !endGameAlreadyRan) {
+            calculatePoints();
+            timeTaken.Value = (System.DateTime.Now.Ticks - timeTaken.Value) / TimeSpan.TicksPerSecond;
             accel = .1f;
             endGame = true;
             endGameAlreadyRan = true;
             raceEnd = true;
-            
+
         }
-        if (doneplaying)
+        /*if (doneplaying)
         {
             if (delayChange > 1440)
             {
-                if (gameLost == false)
+                /*if (gameLost == false)
                 {
                     if (PlayerPrefs.GetInt("phase") == 0)
                     {
@@ -162,7 +164,7 @@ public class Player : NetworkBehaviour
 
                         SceneManager.LoadScene("Game End");
                     }
-                }
+                } 
                 else
                 {
                     SceneManager.LoadScene("Game End");
@@ -171,8 +173,7 @@ public class Player : NetworkBehaviour
             else
             {
                 delayChange++;
-            }
-        }
+            } */
     }
 
     enum CarType
@@ -259,7 +260,7 @@ public class Player : NetworkBehaviour
         }
 
         // output num of points
-        scoreText.text = ("Points earned: " + points);
+        //scoreText.text = ("Points earned: " + points);
         Debug.Log(points);
         PlayerPrefs.SetInt("currency", points);
     }

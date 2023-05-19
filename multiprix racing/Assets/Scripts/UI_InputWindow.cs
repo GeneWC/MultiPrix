@@ -14,7 +14,7 @@ public class UI_InputWindow : MonoBehaviour
     public TextMeshProUGUI question;
     private int answer = 1;
     public Player player;
-    public AudioSource CorrectAudioSource, InorrectAudioSource;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -108,7 +108,7 @@ public class UI_InputWindow : MonoBehaviour
             player.GetComponent<Player>().setQuestionsAnswered(false);
         }
         inputField.ActivateInputField();
-        //InorrectAudioSource.Play(0);
+        GetComponents<AudioSource>()[1].Play(0);
     }
     IEnumerator correctQuestion()
     {
@@ -126,7 +126,7 @@ public class UI_InputWindow : MonoBehaviour
             player.GetComponent<Player>().setQuestionsAnswered(true);
         }
         inputField.ActivateInputField();
-        //CorrectAudioSource.Play(0);
+        GetComponents<AudioSource>()[0].Play(0);
     }
 }
 

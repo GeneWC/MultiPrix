@@ -11,44 +11,54 @@ public class NetworkManagerUI : MonoBehaviour {
     [SerializeField] private Button hostBtn;
     [SerializeField] private Button clientBtn;
     [SerializeField] private GameObject myPrefab;
+    [SerializeField] private GameObject startRaceButton;
+    [SerializeField] private GameObject nextRaceButton;
+    private bool clientStarted = false;
     private void Awake() {
         hostBtn.onClick.AddListener(() => {
-
+            GameObject.Find("NetworkManager").GetComponent<ExampleNetworkDiscovery>().StopDiscovery();
+            Player.playerCounter = 1;
+            StartRace.endGame = false;
             NetworkManager.Singleton.StartHost();
-            SceneManager.activeSceneChanged += SetPlayerPosition;
-            SceneManager.LoadScene("character_select");
+            NetworkManager.Singleton.SceneManager.OnLoadComplete += addButton;
+            NetworkManager.Singleton.SceneManager.OnLoadComplete += SetPlayerPosition;
+            NetworkManager.Singleton.SceneManager.LoadScene("character_select", LoadSceneMode.Single);
+            
             Destroy(GameObject.Find("Main Title Track"));
 
         });
 
         clientBtn.onClick.AddListener(() => {
-            
-            SceneManager.LoadScene("character_select");
+            NetworkManager.Singleton.StartClient();
+            NetworkManager.Singleton.SceneManager.OnLoadComplete += SetPlayerPosition;
             Destroy(GameObject.Find("Main Title Track"));
         });
     }
 
-    private void SetPlayerPosition(Scene currentScene, Scene nextScene) {
-        if (nextScene.name.Equals("general_race")) {
-            GameObject player = Instantiate(myPrefab, Vector3.zero, Quaternion.identity);
-            GetComponent<NetworkObject>().Spawn(false);
-            /*NetworkObject o = NetworkManager.Singleton.LocalClient.PlayerObject;
-             Player p = o.GetComponent<Player>(); */
-
+    private void addButton(ulong clientId, string sceneName, LoadSceneMode loadSceneMode) {
+        if (sceneName.Equals("character_select") && NetworkManager.Singleton.LocalClientId == clientId) {
+            GameObject startButton = Instantiate(startRaceButton, new Vector3(1660,875,0), Quaternion.identity);
+            GameObject characterScreen = GameObject.Find("CharacterScreen");
+            startButton.transform.parent = characterScreen.transform;
+        }
+        if (sceneName.Equals("Upgrades") && NetworkManager.Singleton.LocalClientId == clientId) {
+            GameObject nextRace = Instantiate(nextRaceButton, new Vector3(275, 950, 0), Quaternion.identity);
+            GameObject characterScreen = GameObject.Find("ScreenUpgrades");
+            nextRace.transform.parent = characterScreen.transform;
         }
     }
 
-    /* private void SetPlayerPosition(ulong clientId, string sceneName, LoadSceneMode loadSceneMode) {
-         if (sceneName.Equals("general_race") && NetworkManager.Singleton.IsHost) {
-             NetworkObject o = NetworkManager.Singleton.SpawnManager.GetLocalPlayerObject();
-             Player p = o.GetComponent<Player>();
-             GameObject followPlayerCameraObject = GameObject.Find("CM vcam1");
-             CinemachineVirtualCamera followPlayerCamera = followPlayerCameraObject.GetComponent<CinemachineVirtualCamera>();
-             followPlayerCamera.Follow = p.transform;
-             var transposer = followPlayerCamera.GetCinemachineComponent<CinemachineTransposer>();
-             transposer.m_FollowOffset = new Vector3(7.63f, (-2.8f + (p.m_player - 1) * 1.5f), -10.6f);
-             GameObject inputFieldObject = GameObject.Find("UI_InputWindow");
-             inputFieldObject.GetComponent<UI_InputWindow>().player = p;
+    private void SetPlayerPosition(ulong clientId, string sceneName, LoadSceneMode loadSceneMode) {
+         if (sceneName.Equals("general_race") && NetworkManager.Singleton.LocalClientId == clientId) {
+            Player p = NetworkManager.Singleton.SpawnManager.GetLocalPlayerObject().GetComponent<Player>();
+            p.Initalize();
+            GameObject.Find("PostRaceCanvas").GetComponent<PostRaceCanvas>().reset();
          }
-     }*/
+     }
+    void Update() {
+        if (!clientStarted) {
+            GameObject.Find("NetworkManager").GetComponent<ExampleNetworkDiscovery>().StartClient();
+            clientStarted = true;
+        }
+    }
 }

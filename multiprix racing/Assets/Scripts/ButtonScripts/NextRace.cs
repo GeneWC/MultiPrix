@@ -1,25 +1,24 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using Unity.Netcode;
+using UnityEngine;
 using UnityEngine.SceneManagement;
-public class ToRace : MonoBehaviour
+using UnityEngine.UI;
+
+public class NextRace : MonoBehaviour
 {
-    // Start is called before the first frame update
     public Button toRaceButton;
-    void Start()
-    {
+    void Start() {
         Button btn = toRaceButton.GetComponent<Button>();
         btn.onClick.AddListener(TaskOnClick);
     }
 
-    private void TaskOnClick()
-    {
-        Destroy(GameObject.Find("Main Title Track"));
+    private void TaskOnClick() {
         NetworkManager.Singleton.SceneManager.LoadScene("general_race", LoadSceneMode.Single);
+
+
     }
+
 
     // Update is called once per frame
     void Update()

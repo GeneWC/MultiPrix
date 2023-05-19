@@ -7,8 +7,6 @@ using Unity.Netcode;
 public class AssignCarType : MonoBehaviour
 {
     public Button yourButton;
-    int randomNumber;
-    string mapName = "general_race";
     static bool isNetworkGame = false;
     [SerializeField] private GameObject myPrefab;
     private void Start()
@@ -16,14 +14,14 @@ public class AssignCarType : MonoBehaviour
         
         Button btn = yourButton.GetComponent<Button>();
         btn.onClick.AddListener(TaskOnClick);
-        randomNumber = Random.Range(0, 3);
     }
 
     // Start is called before the first frame update
     public void TaskOnClick() {
-
+        string carName = yourButton.GetComponentInChildren<TMPro.TextMeshProUGUI>().text;
         if (yourButton.name.Equals("Blue"))
         {
+            
             PlayerPrefs.SetInt("carSkin", 0);
         }
         if (yourButton.name.Equals("Red"))
@@ -42,14 +40,19 @@ public class AssignCarType : MonoBehaviour
         {
             PlayerPrefs.SetInt("carSkin", 4);
         }
-        if (yourButton.name.Equals("White"))
+        if (yourButton.name.Equals("White")) 
         {
             PlayerPrefs.SetInt("carSkin", 5);
-        } 
+        }
+        GameObject.Find("TopText").GetComponent<TMPro.TextMeshProUGUI>().text = carName;
+        Destroy(GameObject.Find("Cars"));
+        Destroy(GameObject.Find("Buttons"));
+
+
         //MOVED TO ToRace
         /* Destroy(GameObject.Find("Main Title Track"));
         SceneManager.LoadScene(mapName); */
-        
+
         Debug.Log(PlayerPrefs.GetInt("carSkin"));
 
     }

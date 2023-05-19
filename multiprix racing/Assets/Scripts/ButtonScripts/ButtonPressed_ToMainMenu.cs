@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Unity.Netcode;
 
 public class ButtonPressed_ToMainMenu : MonoBehaviour
 {
@@ -15,9 +16,10 @@ public class ButtonPressed_ToMainMenu : MonoBehaviour
 		btn.onClick.AddListener(TaskOnClick);
     }
     void TaskOnClick(){
-         //AudioSource.Play(0);
-		SceneManager.LoadScene("title_screen");
-       
+        //AudioSource.Play(0);
+        NetworkManager.Singleton.Shutdown();
+        Destroy(NetworkManager.Singleton.gameObject);
+        SceneManager.LoadScene("title_screen");
 	}
 
     // Update is called once per frame
