@@ -14,6 +14,7 @@ public class UI_InputWindow : MonoBehaviour
     public TextMeshProUGUI question;
     private int answer = 1;
     private GameObject player;
+   public GameObject pause;
     public AudioSource CorrectAudioSource, InorrectAudioSource;
     // Start is called before the first frame update
     void Start()
@@ -43,6 +44,11 @@ public class UI_InputWindow : MonoBehaviour
         {
             inputField.DeactivateInputField();
         }
+
+        if (pause.GetComponent<PauseMenu>().isPaused)
+        {
+            inputField.text = "";
+        }
         
     }
 
@@ -52,27 +58,42 @@ public class UI_InputWindow : MonoBehaviour
     {
         
         input = s;
-
-        if (Int32.Parse(input) == answer)
+        if (player.transform.position.x > 915)
         {
-            Debug.Log(increase);
-            increase = PlayerPrefs.GetFloat("speedincrease");
-             player.GetComponent<Player>().setVelocity(increase);
-            StartCoroutine(correctQuestion());
-            Debug.Log("Correct!");
-            GenerateNewQuestion();
-            player.GetComponent<Player>().setQuestionsAnswered(true);
-             
-             
+            inputField.DeactivateInputField();
         }
         else
         {
-            player.GetComponent<Player>().setVelocity(-2);
-            StartCoroutine(incorrectQuestion());
+            inputField.ActivateInputField();
         }
-        inputField.text = "";
-        inputField.Select();
-        inputField.ActivateInputField();
+        try
+        {
+            if (Int32.Parse(input) == answer)
+            {
+                Debug.Log(increase);
+                increase = PlayerPrefs.GetFloat("speedincrease");
+                player.GetComponent<Player>().setVelocity(increase);
+                StartCoroutine(correctQuestion());
+                Debug.Log("Correct!");
+                GenerateNewQuestion();
+                player.GetComponent<Player>().setQuestionsAnswered(true);
+
+
+            }
+            else
+            {
+                player.GetComponent<Player>().setVelocity(-2);
+                StartCoroutine(incorrectQuestion());
+            }
+            inputField.text = "";
+            inputField.Select();
+            inputField.ActivateInputField();
+        }
+        catch (Exception e)
+        {
+            
+        }
+        
     }
 
     public void GenerateNewQuestion()

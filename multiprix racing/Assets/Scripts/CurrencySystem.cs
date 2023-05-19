@@ -19,7 +19,6 @@ public class CurrencySystem : MonoBehaviour
     void Update()
     {
         currency = PlayerPrefs.GetInt("currency");
-        Debug.Log(currency);
         text.text = "Current Balance: " + currency;
     }
 }

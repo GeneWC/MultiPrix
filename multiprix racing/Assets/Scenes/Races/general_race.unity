@@ -988,6 +988,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: a74db880996f8494da25681fa3759a3f, type: 3}
   - {fileID: 21300000, guid: 8f86a161437612f4684f6de396f3b98a, type: 3}
   - {fileID: 21300000, guid: 0db640d2e84c81146b9a5579c7b4d01d, type: 3}
+  inputField: {fileID: 584801805}
   text: {fileID: 1484549901}
   scoreText: {fileID: 1769555752}
   questionsText: {fileID: 647033873}
@@ -4186,7 +4187,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d0a53a5a682b9448a2f111750e017b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  increase: 0
   question: {fileID: 884065840}
+  pause: {fileID: 2025434242}
   CorrectAudioSource: {fileID: 375486000}
   InorrectAudioSource: {fileID: 1526684151}
 --- !u!1 &1282524824
@@ -6212,7 +6215,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa8fd884cc3a2a142a004798ad07d5d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPaused: 0
   pauseMenu: {fileID: 175754495}
+  inputField: {fileID: 584801805}
 --- !u!1 &2057005584
 GameObject:
   m_ObjectHideFlags: 0
