@@ -30,7 +30,7 @@ public class PostRaceCanvas : MonoBehaviour
             updateResults = false;
         }
     }
-    internal void reset() {
+    public void reset() {
         Start();
         score.text = "";
         placement.text = "";

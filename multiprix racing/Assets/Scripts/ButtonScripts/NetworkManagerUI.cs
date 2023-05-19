@@ -6,6 +6,9 @@ using Unity.Netcode;
 using UnityEngine.SceneManagement;
 using System;
 using Cinemachine;
+using Unity.Netcode.Transports.UTP;
+using System.Net;
+using UnityEngine.Events;
 
 public class NetworkManagerUI : MonoBehaviour {
     [SerializeField] private Button hostBtn;
@@ -57,8 +60,17 @@ public class NetworkManagerUI : MonoBehaviour {
      }
     void Update() {
         if (!clientStarted) {
-            GameObject.Find("NetworkManager").GetComponent<ExampleNetworkDiscovery>().StartClient();
+            ExampleNetworkDiscovery nd = GameObject.Find("NetworkManager").GetComponent<ExampleNetworkDiscovery>();
+            nd.OnServerFound.AddListener(OnServerFound);
+            nd.StartClient();
+            nd.ClientBroadcast(new DiscoveryBroadcastData());
             clientStarted = true;
         }
+    }
+
+    void OnServerFound(IPEndPoint sender, DiscoveryResponseData response) {
+        UnityTransport transport = (UnityTransport)NetworkManager.Singleton.NetworkConfig.NetworkTransport;
+        String ipaddress = sender.Address.ToString();
+        transport.SetConnectionData(ipaddress, 7777);
     }
 }
