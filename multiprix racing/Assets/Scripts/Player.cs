@@ -39,6 +39,12 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+<<<<<<< Updated upstream
+=======
+        UnityEngine.Debug.Log(velocity);
+        difficulty = PlayerPrefs.GetFloat("difficultymult");
+        destroyrate = PlayerPrefs.GetFloat("destroyrate");
+>>>>>>> Stashed changes
         
         Debug.Log(accel);
         Debug.Log(velocity);
@@ -50,12 +56,23 @@ public class Player : MonoBehaviour
         else{
             text.text = "" + (int)velocity + " mph" + "\n" + "(MAX SPEED!)";
         }
+<<<<<<< Updated upstream
         if (delayStart > 180)
+=======
+        if (delayStart > 50)
+>>>>>>> Stashed changes
         {
             transform.position += new Vector3((velocity) * Time.deltaTime, 0, 0);
-            if (velocity > 0 && !endGame)
+            if (velocity > 0 && !endGame && PlayerPrefs.GetInt("IsPaused") == 0)
             {
+<<<<<<< Updated upstream
                 velocity -= accel;
+=======
+
+               velocity -= (accel * difficulty) * 2;
+
+
+>>>>>>> Stashed changes
             }
             if (endGame)
             {
@@ -89,6 +106,8 @@ public class Player : MonoBehaviour
         else
         {
             delayStart++;
+            questionsAnsweredRight = 0;
+            questionsAnsweredWrong = 0;
         }
 
         if (transform.position.x > 920 && !endGameAlreadyRan)
@@ -101,7 +120,7 @@ public class Player : MonoBehaviour
         }
         if (doneplaying)
         {
-            if (delayChange > 1440)
+            if (delayChange > 100)
             {
                 if(PlayerPrefs.GetInt("phase") == 0){
                     
@@ -116,6 +135,8 @@ public class Player : MonoBehaviour
             {
                 delayChange++;
             }
+
+
         }
     }
 

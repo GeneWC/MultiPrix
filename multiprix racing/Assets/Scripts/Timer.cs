@@ -23,7 +23,12 @@ public class Timer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+<<<<<<< Updated upstream
         if(waitTime > 520)
+=======
+        
+        if (waitTime > 35)
+>>>>>>> Stashed changes
         {
             time--;
             text.text = "Time Remaining: " + time;
